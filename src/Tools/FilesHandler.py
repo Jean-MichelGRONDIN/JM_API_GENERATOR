@@ -19,14 +19,17 @@ def writeInFile(name, data):
         with open(name, 'w+') as f:
             f.write(data)
 
-def createFile(name):
-    writeInFile(name, "")
-
-def creatFileByPath(path, data):
+def writeInFileByPath(path, data):
     file = path
     folders = dirname(path)
     createFolder(folders)
-    createFile(file)
+    writeInFile(file, data)
+
+def createFile(name):
+    writeInFile(name, "")
+
+def creatFileByPath(path):
+    writeInFileByPath(path, "")
 
 def basename(str):
     return path.basename(str)
