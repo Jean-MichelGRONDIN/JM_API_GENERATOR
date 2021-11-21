@@ -13,11 +13,10 @@ def readJsonFile(path):
     file = readFile(path)
     return loads(file)
 
-def writeInFile(name, data):
-    chekfile = basename(name)
-    if (chekfile != ''):
-        with open(name, 'w+') as f:
-            f.write(data)
+def writeInFile(path, data):
+    with open(path, 'w+') as f:
+        f.truncate()
+        f.write(data)
 
 def writeInFileByPath(path, data):
     file = path
