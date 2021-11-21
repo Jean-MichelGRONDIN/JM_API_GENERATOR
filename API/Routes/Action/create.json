@@ -5,7 +5,8 @@
         {
             "name": "",
             "type": "string",
-            "from": "params",
+            "from": "params",/* ou "body" ou "raw" */
+            "rawValue": "",
             "sanitizer": "",
             "validator": "",
             "correspondToField": {

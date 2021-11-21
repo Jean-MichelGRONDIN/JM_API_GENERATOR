@@ -26,3 +26,6 @@ class Generator:
 # le nom des fichiers c'est du style action_likes
 # génère les migration ? => Dire les fields, leur type (type model != type migration ? have to guess ?), si y'as des constraints, donner l'ordre dans lequel créer les migration (ptete repèrer des trucs avec les nom ? (has == liaison ?))
 # créer le model en transformant le nom du fichier en KamelCase singulier : ActionLike ( utiliser une regex ^([a-Z]) to upper et tous les _([a-Z]) to upper sans le _ )
+
+
+# Comment je gère quand une data vient d'un middleware ? Genre auth avec le user_id ?
