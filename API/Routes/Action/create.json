@@ -1,0 +1,18 @@
+{
+    "method": "POST",
+    "targetTable": "actions",
+    "data": [
+        {
+            "name": "",
+            "type": "string",
+            "from": "params",
+            "sanitizer": "",
+            "validator": "",
+            "correspondToField": {
+                "hasTarget": false,
+                "field": ""
+            }
+        }
+    ],
+    "middlewares": ["hasAuth"]
+}
