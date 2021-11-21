@@ -1,10 +1,12 @@
 class Generator:
-    def __init__(self):
+    def __init__(self, folderPath):
+        self.folderPath = folderPath
         print('Starting generator\n')
 
     def run(self):
         print('Running generator\n')
         # try:
+        #     #setup (copy template)
         #     #exec
         # except:
         #     #print error
@@ -20,7 +22,7 @@ class Generator:
 # pas chercher si le model, le middleware, ... exist juste utilise les comme ci ils existait (ecrit les imports toi même)
 
 
-# list chaques fichiers dans table
+# list chaques fichiers dans API/Tables/
 # le nom des fichiers c'est du style action_likes
 # génère les migration ? => Dire les fields, leur type (type model != type migration ? have to guess ?), si y'as des constraints, donner l'ordre dans lequel créer les migration (ptete repèrer des trucs avec les nom ? (has == liaison ?))
 # créer le model en transformant le nom du fichier en KamelCase singulier : ActionLike ( utiliser une regex ^([a-Z]) to upper et tous les _([a-Z]) to upper sans le _ )
