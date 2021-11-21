@@ -3,8 +3,22 @@ class Generator:
         self.folderPath = folderPath
         print('Starting generator\n')
 
+    def generateTables(self):
+        return
+
+    def generateRoutes(self):
+        return
+
     def run(self):
         print('Running generator\n')
+        try:
+            self.generateTables()
+            self.generateRoutes()
+        except:
+            print("Failling to generate the API")
+            return 1
+        print("Generation Successful\n")
+        return 0
         # try:
         #     #setup (copy template)
         #     #exec
