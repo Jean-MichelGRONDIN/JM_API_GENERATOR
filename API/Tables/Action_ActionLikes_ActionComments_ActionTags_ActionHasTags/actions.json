@@ -1,7 +1,33 @@
 {
     "fields": [
         {
-            "name": "",
+            "name": "creator_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        },
+        {
+            "name": "workspace_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        },
+        {
+            "name": "title",
             "type": "string",
             "nullable": false,
             "default": {

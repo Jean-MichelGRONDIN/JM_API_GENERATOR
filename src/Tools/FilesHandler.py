@@ -38,9 +38,4 @@ def createFile(name):
 def creatFileByPath(path):
     writeInFileByPath(path, "")
 
-def basename(str):
-    return basename(str)
-
-def dirname(str):
-    return dirname(str)
 

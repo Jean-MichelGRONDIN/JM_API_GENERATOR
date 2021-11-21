@@ -1,0 +1,43 @@
+{
+    "fields": [
+        {
+            "name": "action_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        },
+        {
+            "name": "user_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": true,
+                "refTo": "actions.id"
+            }
+        },
+        {
+            "name": "content",
+            "type": "string",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        }
+    ]
+}

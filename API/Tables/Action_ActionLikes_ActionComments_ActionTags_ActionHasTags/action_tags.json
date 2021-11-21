@@ -1,0 +1,43 @@
+{
+    "fields": [
+        {
+            "name": "workspace_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        },
+        {
+            "name": "color",
+            "type": "string",
+            "nullable": false,
+            "default": {
+                "exist": false,
+                "value": ""
+            },
+            "references": {
+                "isRef": false,
+                "refTo": ""
+            }
+        }
+    ]
+}

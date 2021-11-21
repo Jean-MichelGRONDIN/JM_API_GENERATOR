@@ -1,0 +1,1 @@
+MODEL_TEMPLATE_PATH = "./Templates/Files/Tables/ModelTemplate.ts"
