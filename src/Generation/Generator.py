@@ -1,6 +1,7 @@
 from .ModelGenerator import ModelGenerator
 from .DistPaths import MODEL_DEST, MIGRATION_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
+from ..Tools.JsonHandler import JsonHandler
 
 class Generator:
     def __init__(self, confSrc):
@@ -13,7 +14,7 @@ class Generator:
 
     def generateModel(self, filePath, fileName):
         destPath = self.generationDest + MODEL_DEST
-        jsonFile = readJsonFile(filePath)
+        jsonFile = JsonHandler(readJsonFile(filePath))
         modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
         modelGenerator.run()
         return
@@ -46,6 +47,7 @@ class Generator:
         # try:
         self.generateTables()
         self.generateRoutes()
+        # Clear flags
         # except Exception as error:
         #     print("Failling to generate the API\n")
         #     print(error)
