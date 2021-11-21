@@ -1,6 +1,14 @@
-from os import makedirs, path
+from os import listdir, makedirs
+from os.path import isfile, isdir, join, basename, dirname
 from json import loads
 
+def getDirFolders(path):
+    folders = [f for f in listdir(path) if isdir(join(path, f))]
+    return folders
+
+def getDirFiles(path):
+    files = [f for f in listdir(path) if isfile(join(path, f)) and f[-5:] == '.json']
+    return files
 
 def createFolder(path):
     makedirs(path, exist_ok=True)
@@ -31,7 +39,8 @@ def creatFileByPath(path):
     writeInFileByPath(path, "")
 
 def basename(str):
-    return path.basename(str)
+    return basename(str)
 
 def dirname(str):
-    return path.dirname(str)
+    return dirname(str)
+
