@@ -1,0 +1,8 @@
+.vscode
+node_modules/
+key.pem
+cert.pem
+dist/
+.env
+.nyc_output/
+logs.txt

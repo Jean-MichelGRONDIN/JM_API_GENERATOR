@@ -1,0 +1,120 @@
+# stages:
+#   - "confidence-check"
+#   - "builds"
+#   - "tests"
+#   - "deploys"
+
+
+# api-build:
+#   stage: builds
+#   image: registry.gitlab.com/app.iness/api-template:latest
+#   script:
+#     - ls && pwd
+#     - cp /home/server/.env ./
+#     - npm i
+#     - make api-dev
+
+# api-test-prettier:
+#   stage: tests
+#   image: registry.gitlab.com/app.iness/api-template:latest
+#   script:
+#     - npm i
+#     - echo -e "Code \n"
+#     - echo -e "\t\t0 => Everything formatted properly       ✅\n"
+#     - echo -e "\t\t1 => Something wasn’t formatted properly 🔥\n"
+#     - echo -e "\t\t2 => Something’s wrong with Prettier     ❌\n\n\n"
+#     - npm run prettier
+
+# # e2e:firefox:
+# #   stage: confidence-check
+# #   image: node:14.17.0
+# #   services:
+# #     - selenium/standalone-firefox
+# #   script:
+# #     - npm run confidence-check --host=selenium__standalone-firefox
+
+
+# # e2e:chrome:
+# #   stage: confidence-check
+# #   image: node:14.17.0
+# #   services:
+# #     - selenium/standalone-chrome
+# #   script:
+# #     - npm run confidence-check --host=selenium__standalone-chrome
+
+
+# api-test:
+#   stage: tests
+#   image: registry.gitlab.com/app.iness/api-template:latest
+
+#   services:
+#     - name: docker:dind
+#       alias: docker
+#     - name: postgres:13
+#       alias: database
+
+#   variables:
+#     API_MODE: $API_MODE
+#     API_PORT: $API_PORT
+#     API_HOST: $API_DOMAIN:$API_PORT
+#     API_CORS: $API_CORS
+#     API_TZ: $API_TZ
+#     API_DOMAIN: $API_DOMAIN
+#     API_SSL: $API_SSL
+#     API_CERT: $API_CERT
+#     API_KEY: $API_KEY
+
+#     API_OAUTH_ID: $API_OAUTH_ID
+#     API_OAUTH_SECRET: $API_OAUTH_SECRET
+#     API_SECRET: $API_SECRET
+#     API_ACCESS_TOKEN: $API_ACCESS_TOKEN
+#     API_REFRESH_TOKEN: $API_REFRESH_TOKEN
+
+#     FRONT_HOST: $FRONT_HOST
+
+#     VERSION_IOS: $VERSION_IOS
+#     VERSION_ANDROID: $VERSION_ANDROID
+#     VERSION_PWA: $VERSION_PWA
+
+#     API_MAIL_FROM: $API_MAIL_FROM
+#     API_MAIL_USER: $API_MAIL_USER
+#     API_MAIL_PASSWORD: $API_MAIL_PASSWORD
+#     API_MAIL_HOST: $API_MAIL_HOST
+#     API_MAIL_PORT: $API_MAIL_PORT
+
+#     POSTGRES_DB: $POSTGRES_DB
+#     POSTGRES_USER: $POSTGRES_USER
+#     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+#     POSTGRES_HOST: $POSTGRES_HOST
+#     POSTGRES_PORT: $POSTGRES_PORT
+#     TZ: ${API_TZ}
+#     LC_ALL: C.UTF-8
+
+#     # Tell docker CLI how to talk to Docker daemon; see
+#     # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-docker-in-docker-executor
+#     DOCKER_HOST: tcp://docker:2375/
+#     # Use the overlayfs driver for improved performance:
+#     DOCKER_DRIVER: overlay2
+#     DOCKER_TLS_CERTDIR: ""
+#     DOCKER_PRIVILEGED: "true"
+  
+#   before_script:
+#     - npm i
+#   script:
+#     - cat /etc/hosts
+#     - nohup npm run serve &
+#     - ./getCoverage.sh 80.00
+
+# deploy-production:
+#   stage: deploy
+#   only:
+#       - main
+#   before_script:
+#     - mkdir -p ~/.ssh
+#     - echo -e "$PROD_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#     - chmod 600 ~/.ssh/id_rsa
+#     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config' 
+
+#   script:
+#     - bash .gitlab-deploy-prod.sh
+
