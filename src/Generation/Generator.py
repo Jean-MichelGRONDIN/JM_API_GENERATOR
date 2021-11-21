@@ -48,6 +48,7 @@ class Generator:
         self.generateTables()
         self.generateRoutes()
         # Clear flags
+        # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
         # except Exception as error:
         #     print("Failling to generate the API\n")
         #     print(error)
