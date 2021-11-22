@@ -1,5 +1,4 @@
 from .Flags import MODEL_NAME, MODEL_FIELDS
-from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath
 from ..Tools.CaseHandler import toTitleCamelCase
 from .TemplatesPaths import MODEL_TEMPLATE_PATH

@@ -1,4 +1,5 @@
 from .ModelGenerator import ModelGenerator
+from .MigrationGenerator import MigrationGenerator
 from .DistPaths import MODEL_DEST, MIGRATION_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
 from ..Tools.JsonHandler import JsonHandler
@@ -19,10 +20,10 @@ class Generator:
         modelGenerator.run()
         return
 
-    def generateMigration(self, migrationName, migrationPath, files):
+    def generateMigration(self, migrationName, files):
         destPath = self.generationDest + MIGRATION_DEST
-        # modelGenerator = ModelGenerator(self.confSrc, self.generationDest)
-        # modelGenerator.run()
+        modelGenerator = MigrationGenerator(destPath, migrationName, files)
+        modelGenerator.run()
         return
 
     def generateTables(self):
@@ -36,7 +37,7 @@ class Generator:
                 filePath = migrationPath + "/" + file
                 filesPaths.append(filePath)
                 self.generateModel(filePath, file)
-            self.generateMigration(migrationName, migrationPath, filesPaths)
+            self.generateMigration(migrationName, filesPaths)
         return
 
     def generateRoutes(self):
