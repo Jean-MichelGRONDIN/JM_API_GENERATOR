@@ -1,7 +1,7 @@
-from .Flags import MODEL_NAME, MODEL_FIELDS
+from .Flags import MODEL_NAME, MODEL_FIELDS, MODEL_FIELD_NAME, MODEL_FIELD_TYPE
 from ..Tools.FilesHandler import readFile, writeInFileByPath
 from ..Tools.CaseHandler import toTitleCamelCase
-from .TemplatesPaths import MODEL_TEMPLATE_PATH
+from .TemplatesPaths import MODEL_TEMPLATE_PATH, MODEL_FIELD_TEMPLATE_PATH
 
 class ModelGenerator:
     def __init__(self, distPath, fileName, jsonFile):
@@ -19,11 +19,10 @@ class ModelGenerator:
         i = 0
         while i < nbFields:
             field = fields.navigate(str(i))
-            data += "\t"
-            data += field.access('name')
-            data += ": "
-            data += field.access('modelType')
-            data += ",\n"
+            data += readFile(MODEL_FIELD_TEMPLATE_PATH)
+            data = data.replace(MODEL_FIELD_NAME, field.access('name'))
+            data = data.replace(MODEL_FIELD_TYPE, field.access('modelType'))
+            data += "\n"
             i += 1
         data += MODEL_FIELDS
         return data

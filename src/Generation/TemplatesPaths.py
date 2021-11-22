@@ -1,5 +1,7 @@
 MODEL_TEMPLATE_PATH = "./Templates/Files/Tables/ModelTemplate.ts"
 
+MODEL_FIELD_TEMPLATE_PATH = "./Templates/Files/Tables/Model/ModelFieldTemplate.ts"
+
 MIGRATION_TEMPLATE_PATH = "./Templates/Files/Tables/MigrationTemplate.ts"
 
 MIGRATION_UP_TEMPLATE_PATH = "./Templates/Files/Tables/Up/MigrationUpTemplate.ts"
