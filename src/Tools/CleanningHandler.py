@@ -1,6 +1,10 @@
 from .FilesHandler import readFile, writeInFile
 from re import sub
 
+def replaceTabsBySpaces(data):
+    data = sub(r'\t', '    ', data)
+    return data
+
 def cleanTags(data):
     data = sub(r'\$[A-Z,_]+\$', '', data)
     return data
@@ -20,6 +24,7 @@ def cleanLongLineReturnBeforeDotComma(data):
 
 def cleanModelFile(filePath):
     cleanningSteps = [
+        replaceTabsBySpaces,
         cleanTags,
         cleanDuplicatedLineReturns
     ]
@@ -30,6 +35,7 @@ def cleanModelFile(filePath):
 
 def cleanMigrationFile(filePath):
     cleanningSteps = [
+        replaceTabsBySpaces,
         cleanTags,
         cleanLongLineReturnChains,
         cleanLongLineReturnBeforeDotComma
