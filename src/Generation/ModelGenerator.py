@@ -32,6 +32,9 @@ class ModelGenerator:
         self.template = self.template.replace(MODEL_NAME, self.fileName)
         self.template = self.template.replace(MODEL_FIELDS, self.printFields())
 
+    def getDistFilePath(self):
+        return self.distFile
+
     def run(self):
         print('\nRun model generator\n', self.distFile, "\n")
         self.replaceFlags()

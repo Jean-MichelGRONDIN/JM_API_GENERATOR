@@ -16,7 +16,7 @@ class TablesGenerator:
         jsonFile = JsonHandler(readJsonFile(filePath))
         modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
         modelGenerator.run()
-        # get dest file path
+        # get dest file path => modelGenerator.getDistFilePath()
         # append to list
         return
 
@@ -24,9 +24,9 @@ class TablesGenerator:
         destPath = self.generationDest + MIGRATION_DEST
         jsonFiles = [[int(JsonHandler(readJsonFile(file)).access('order')), basename(file), JsonHandler(readJsonFile(file))] for file in files]
         orderList = sorted(jsonFiles, key=lambda elem: elem[0])
-        modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
-        modelGenerator.run()
-        # get dest file path
+        migrationGenerator = MigrationGenerator(destPath, migrationName, orderList)
+        migrationGenerator.run()
+        # get dest file path => migrationGenerator.getDistFilePath()
         # append to list
         return
 

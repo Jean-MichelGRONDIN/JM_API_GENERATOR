@@ -77,6 +77,9 @@ class MigrationGenerator:
         for file in self.files:
             self.replaceFlags(file)
 
+    def getDistFilePath(self):
+        return self.distFile
+
     def run(self):
         print('\nRun migration generator\n', self.distFile, "\n")
         self.generate()
