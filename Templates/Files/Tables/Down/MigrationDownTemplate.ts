@@ -1,0 +1,1 @@
+    .dropTable('$MIGRATION_TABLE_NAME$')

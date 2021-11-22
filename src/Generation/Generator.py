@@ -9,35 +9,6 @@ class Generator:
             self.confSrc = confSrc
         self.generationDest = "./dist/"
 
-    # def generateModel(self, filePath, fileName):
-    #     destPath = self.generationDest + MODEL_DEST
-    #     jsonFile = JsonHandler(readJsonFile(filePath))
-    #     modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
-    #     modelGenerator.run()
-    #     return
-
-    # def generateMigration(self, migrationName, files):
-    #     destPath = self.generationDest + MIGRATION_DEST
-    #     jsonFiles = [[int(JsonHandler(readJsonFile(file)).access('order')), basename(file), JsonHandler(readJsonFile(file))] for file in files]
-    #     orderList = sorted(jsonFiles, key=lambda elem: elem[0])
-    #     modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
-    #     modelGenerator.run()
-    #     return
-
-    # def generateTables(self):
-    #     foldersPath = self.confSrc + "/Tables"
-    #     folders = getDirFolders(foldersPath)
-    #     for migrationName in folders:
-    #         migrationPath = foldersPath + "/" + migrationName
-    #         files = getDirFiles(migrationPath)
-    #         filesPaths = []
-    #         for file in files:
-    #             filePath = migrationPath + "/" + file
-    #             filesPaths.append(filePath)
-    #             self.generateModel(filePath, file)
-    #         self.generateMigration(migrationName, filesPaths)
-    #     return
-
     def generateRoutes(self):
         return
 

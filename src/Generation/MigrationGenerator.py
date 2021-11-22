@@ -1,6 +1,6 @@
-from .Flags import MODEL_NAME, MODEL_FIELDS
+from .Flags import MIGRATION_UP, MIGRATION_DOWN, MIGRATION_TABLE_NAME
 from ..Tools.FilesHandler import readFile, writeInFileByPath
-from .TemplatesPaths import MIGRATION_TEMPLATE_PATH
+from .TemplatesPaths import MIGRATION_TEMPLATE_PATH, MIGRATION_UP_TEMPLATE_PATH, MIGRATION_DOWN_TEMPLATE_PATH
 from datetime import datetime
 
 class MigrationGenerator:
@@ -14,29 +14,37 @@ class MigrationGenerator:
         self.template = readFile(MIGRATION_TEMPLATE_PATH)
         print('\nSetup migration generator\n', self.distFile, "\n")
 
-    # def printFields(self):
-    #     data = ""
-    #     fields = self.json.navigate('fields')
-    #     nbFields = len(fields.getContent())
-    #     i = 0
-    #     while i < nbFields:
-    #         field = fields.navigate(str(i))
-    #         data += "\t"
-    #         data += field.access('name')
-    #         data += ": "
-    #         data += field.access('modelType')
-    #         data += ",\n"
-    #         i += 1
-    #     data += MODEL_FIELDS
-    #     return data
+
+    def printMigrationUp(self, tableName, json):
+        data = ""
+        data += readFile(MIGRATION_UP_TEMPLATE_PATH)
+        data = data.replace(MIGRATION_TABLE_NAME, tableName)
+        # for each field call print field function
+        # paste createTableTemplate
+        # send to flag createTableReplaceFlag and data = el ret
+        data += "\n" + MIGRATION_UP
+        return data
+
+    def printMigrationDown(self, tableName):
+        data = ""
+        data += MIGRATION_DOWN + "\n"
+        data += readFile(MIGRATION_DOWN_TEMPLATE_PATH)
+        data = data.replace(MIGRATION_TABLE_NAME, tableName)
+        return data
 
 
-    # def replaceFlags(self):
-    #     self.template = self.template.replace(MODEL_NAME, self.fileName)
-    #     self.template = self.template.replace(MODEL_FIELDS, self.printFields())
+    def replaceFlags(self, file):
+        tableName = file[1][:-5]
+        json = file[2]
+        self.template = self.template.replace(MIGRATION_UP, self.printMigrationUp(tableName, json))
+        self.template = self.template.replace(MIGRATION_DOWN, self.printMigrationDown(tableName))
+
+    def generate(self):
+        for file in self.files:
+            self.replaceFlags(file)
 
     def run(self):
         print('\nRun migration generator\n', self.distFile, "\n")
-        # self.replaceFlags()
+        self.generate()
         writeInFileByPath(self.distFile, self.template)
 
