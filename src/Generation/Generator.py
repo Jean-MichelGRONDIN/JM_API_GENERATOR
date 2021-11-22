@@ -1,9 +1,4 @@
-from .ModelGenerator import ModelGenerator
-from .MigrationGenerator import MigrationGenerator
-from .DistPaths import MODEL_DEST, MIGRATION_DEST
-from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
-from ..Tools.JsonHandler import JsonHandler
-from os.path import basename
+from .TablesGenerator import TablesGenerator
 
 class Generator:
     def __init__(self, confSrc):
@@ -14,34 +9,34 @@ class Generator:
             self.confSrc = confSrc
         self.generationDest = "./dist/"
 
-    def generateModel(self, filePath, fileName):
-        destPath = self.generationDest + MODEL_DEST
-        jsonFile = JsonHandler(readJsonFile(filePath))
-        modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
-        modelGenerator.run()
-        return
+    # def generateModel(self, filePath, fileName):
+    #     destPath = self.generationDest + MODEL_DEST
+    #     jsonFile = JsonHandler(readJsonFile(filePath))
+    #     modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
+    #     modelGenerator.run()
+    #     return
 
-    def generateMigration(self, migrationName, files):
-        destPath = self.generationDest + MIGRATION_DEST
-        jsonFiles = [[int(JsonHandler(readJsonFile(file)).access('order')), basename(file), JsonHandler(readJsonFile(file))] for file in files]
-        orderList = sorted(jsonFiles, key=lambda elem: elem[0])
-        modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
-        modelGenerator.run()
-        return
+    # def generateMigration(self, migrationName, files):
+    #     destPath = self.generationDest + MIGRATION_DEST
+    #     jsonFiles = [[int(JsonHandler(readJsonFile(file)).access('order')), basename(file), JsonHandler(readJsonFile(file))] for file in files]
+    #     orderList = sorted(jsonFiles, key=lambda elem: elem[0])
+    #     modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
+    #     modelGenerator.run()
+    #     return
 
-    def generateTables(self):
-        foldersPath = self.confSrc + "/Tables"
-        folders = getDirFolders(foldersPath)
-        for migrationName in folders:
-            migrationPath = foldersPath + "/" + migrationName
-            files = getDirFiles(migrationPath)
-            filesPaths = []
-            for file in files:
-                filePath = migrationPath + "/" + file
-                filesPaths.append(filePath)
-                self.generateModel(filePath, file)
-            self.generateMigration(migrationName, filesPaths)
-        return
+    # def generateTables(self):
+    #     foldersPath = self.confSrc + "/Tables"
+    #     folders = getDirFolders(foldersPath)
+    #     for migrationName in folders:
+    #         migrationPath = foldersPath + "/" + migrationName
+    #         files = getDirFiles(migrationPath)
+    #         filesPaths = []
+    #         for file in files:
+    #             filePath = migrationPath + "/" + file
+    #             filesPaths.append(filePath)
+    #             self.generateModel(filePath, file)
+    #         self.generateMigration(migrationName, filesPaths)
+    #     return
 
     def generateRoutes(self):
         return
@@ -49,7 +44,9 @@ class Generator:
     def run(self):
         print('Running generator\n')
         # try:
-        self.generateTables()
+        tablesGenerator = TablesGenerator(self.confSrc, self.generationDest)
+        tablesGenerator.run()
+
         self.generateRoutes()
         # Clear flags
         # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
