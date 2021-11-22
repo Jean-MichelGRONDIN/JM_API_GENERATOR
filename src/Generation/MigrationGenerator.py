@@ -9,7 +9,8 @@ class MigrationGenerator:
         now = datetime.now()
         self.fileName = now.strftime("%Y%m%d_create_") + fileName + "_tables.ts"
         self.distFile = self.distPath + "/" + self.fileName + ".ts"
-        self.files = tableFiles#doit dejà être dans l'ordre et en format json
+        self.files = tableFiles
+        # self.revList = sorted(tableFiles, key=lambda elem: elem[0], reverse=True)
         self.template = readFile(MIGRATION_TEMPLATE_PATH)
         print('\nSetup migration generator\n', self.distFile, "\n")
 

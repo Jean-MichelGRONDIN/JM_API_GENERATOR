@@ -3,6 +3,7 @@ from .MigrationGenerator import MigrationGenerator
 from .DistPaths import MODEL_DEST, MIGRATION_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
 from ..Tools.JsonHandler import JsonHandler
+from os.path import basename
 
 class Generator:
     def __init__(self, confSrc):
@@ -22,7 +23,9 @@ class Generator:
 
     def generateMigration(self, migrationName, files):
         destPath = self.generationDest + MIGRATION_DEST
-        modelGenerator = MigrationGenerator(destPath, migrationName, files)
+        jsonFiles = [[int(JsonHandler(readJsonFile(file)).access('order')), basename(file), JsonHandler(readJsonFile(file))] for file in files]
+        orderList = sorted(jsonFiles, key=lambda elem: elem[0])
+        modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
         modelGenerator.run()
         return
 
