@@ -1,6 +1,7 @@
-from .Flags import MIGRATION_UP, MIGRATION_DOWN, MIGRATION_TABLE_NAME
+from .Flags import MIGRATION_UP, MIGRATION_DOWN, MIGRATION_TABLE_NAME, MIGRATION_FIELD_PLACEHOLDER, MIGRATION_REFERENCE_PLACEHOLDER, MIGRATION_FIELD_NAME, MIGRATION_FIELD_NAME, MIGRATION_FIELD_TYPE, MIGRATION_IS_NULLABLE, MIGRATION_DEFAULT, MIGRATION_DEFAULT_VALUE
 from ..Tools.FilesHandler import readFile, writeInFileByPath
-from .TemplatesPaths import MIGRATION_TEMPLATE_PATH, MIGRATION_UP_TEMPLATE_PATH, MIGRATION_DOWN_TEMPLATE_PATH
+from .TemplatesPaths import MIGRATION_TEMPLATE_PATH, MIGRATION_UP_TEMPLATE_PATH, MIGRATION_DOWN_TEMPLATE_PATH, MIGRATION_UP_TEMPLATE_FIELD_PATH, MIGRATION_UP_TEMPLATE_FIELD_NOT_NULLABLE_PATH, MIGRATION_UP_TEMPLATE_FIELD_DEFAULT_PATH
+from ..Tools.JsonHandler import JsonHandler
 from datetime import datetime
 
 class MigrationGenerator:
@@ -15,10 +16,45 @@ class MigrationGenerator:
         print('\nSetup migration generator\n', self.distFile, "\n")
 
 
+    def printMigrationFieldPlaceHolder(self, field):
+        data = ""
+        data += readFile(MIGRATION_UP_TEMPLATE_FIELD_PATH)
+        data = data.replace(MIGRATION_FIELD_NAME, field.access('name'))
+        data = data.replace(MIGRATION_FIELD_TYPE, field.access('type'))
+        data += "\n\n" + MIGRATION_FIELD_PLACEHOLDER
+        return data
+
+    def printMigrationFieldIsNullable(self, json):
+        data = ""
+        if json.access('nullable') == False:
+            data += readFile(MIGRATION_UP_TEMPLATE_FIELD_NOT_NULLABLE_PATH)
+        return data
+
+    def printMigrationFieldDefault(self, json):
+        data = ""
+        if json.access('default.exist'):
+            data += readFile(MIGRATION_UP_TEMPLATE_FIELD_DEFAULT_PATH)
+            data = data.replace(MIGRATION_DEFAULT_VALUE, json.access('default.value'))
+        return data
+
+    # def printMigrationFieldIsNullable(self, json):
+    #     data = ""
+    #     if json.access('nullable'):
+    #         data += readFile(MIGRATION_UP_TEMPLATE_FIELD_IS_NULLABLE_PATH)
+    #     return data
+
     def printMigrationUp(self, tableName, json):
         data = ""
         data += readFile(MIGRATION_UP_TEMPLATE_PATH)
         data = data.replace(MIGRATION_TABLE_NAME, tableName)
+
+        for field in json.access('fields'):
+            jsonField = JsonHandler(field)
+            data = data.replace(MIGRATION_FIELD_PLACEHOLDER, self.printMigrationFieldPlaceHolder(jsonField))
+            data = data.replace(MIGRATION_IS_NULLABLE, self.printMigrationFieldIsNullable(jsonField))
+            data = data.replace(MIGRATION_DEFAULT, self.printMigrationFieldDefault(jsonField))
+            # data = data.replace(MIGRATION_REFERENCE_PLACEHOLDER, self.printMigrationFieldPlaceHolder(jsonField))
+
         # for each field call print field function
         # paste createTableTemplate
         # send to flag createTableReplaceFlag and data = el ret
