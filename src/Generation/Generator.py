@@ -19,21 +19,14 @@ class Generator:
         tablesGenerator.run()
 
         self.generateRoutes()
-        # Clear flags
-        # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
-        # replace every \t par 4 espaces
+        #     # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
+        #     # replace every \t par 4 espaces
         # except Exception as error:
         #     print("Failling to generate the API\n")
         #     print(error)
         #     return 1
         print("Generation Successful\n")
         return 0
-        # try:
-        #     #setup (copy template)
-        #     #exec
-        # except:
-        #     #print error
-        #     #delete generated folder (dist/)
 
 
 # list les folders qu'il y à dans API/Routes/
@@ -43,12 +36,9 @@ class Generator:
 # un fichier json par route
 # dans le fichier json donner : la method, sanitizer, request, middlewares
 # pas chercher si le model, le middleware, ... exist juste utilise les comme ci ils existait (ecrit les imports toi même)
-
-
-# list chaques fichiers dans API/Tables/
-# le nom des fichiers c'est du style action_likes
-# génère les migration ? => Dire les fields, leur type (type model != type migration ? have to guess ?), si y'as des constraints, donner l'ordre dans lequel créer les migration (ptete repèrer des trucs avec les nom ? (has == liaison ?))
-# créer le model en transformant le nom du fichier en KamelCase singulier : ActionLike ( utiliser une regex ^([a-Z]) to upper et tous les _([a-Z]) to upper sans le _ )
-
-
 # Comment je gère quand une data vient d'un middleware ? Genre auth avec le user_id ?
+
+
+# Evolution ?: (Ne pas faire que du CRUD)
+# Pouvoir les closes where des query ?
+# ...
