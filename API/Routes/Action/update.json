@@ -1,0 +1,76 @@
+{
+    "method": "PUT",
+    "targetTable": "actions",
+    "data": [
+        {
+            "name": "creator_id",
+            "type": "string",
+            "get": {
+                "from": "raw",
+                "rawImport": "import { User } from './../utils/user'",
+                "rawValue": "User.getInstance()?.getUserID()"
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "creator_id",
+                "asWhere": true,
+                "asAction": false
+            }
+        },
+        {
+            "name": "action_id",
+            "type": "string",
+            "get": {
+                "from": "params",
+                "rawImport": "",
+                "rawValue": ""
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "id",
+                "asWhere": true,
+                "asAction": false
+            }
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "get": {
+                "from": "body",
+                "rawValue": "",
+                "rawImport": ""
+            },
+            "sanitizer": {
+                "has": true,
+                "rule": "strip_tags"
+            },
+            "validator": {
+                "has": true,
+                "rule": "required|string|max:255"
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "title",
+                "asWhere": false,
+                "asAction": true
+            }
+        }
+    ],
+    "middlewares": ["hasAuth"]
+}

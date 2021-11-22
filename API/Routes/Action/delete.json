@@ -1,0 +1,53 @@
+{
+    "method": "DELETE",
+    "targetTable": "actions",
+    "data": [
+        {
+            "name": "action_id",
+            "type": "string",
+            "get": {
+                "from": "params",
+                "rawImport": "",
+                "rawValue": ""
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "id",
+                "asWhere": true,
+                "asAction": false
+            }
+        },
+        {
+            "name": "creator_id",
+            "type": "string",
+            "get": {
+                "from": "raw",
+                "rawImport": "import { User } from './../utils/user'",
+                "rawValue": "User.getInstance()?.getUserID()"
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "creator_id",
+                "asWhere": true,
+                "asAction": false
+            }
+        }
+    ],
+    "middlewares": ["hasAuth"]
+}

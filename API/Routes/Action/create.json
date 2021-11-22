@@ -3,15 +3,72 @@
     "targetTable": "actions",
     "data": [
         {
-            "name": "",
+            "name": "creator_id",
             "type": "string",
-            "from": "params",/* ou "body" ou "raw" */
-            "rawValue": "",
-            "sanitizer": "",
-            "validator": "",
+            "get": {
+                "from": "raw",
+                "rawImport": "import { User } from './../utils/user'",
+                "rawValue": "User.getInstance()?.getUserID()"
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
             "correspondToField": {
-                "hasTarget": false,
-                "field": ""
+                "hasTarget": true,
+                "field": "creator_id",
+                "asWhere": false,
+                "asAction": true
+            }
+        },
+        {
+            "name": "workspace_id",
+            "type": "string",
+            "get": {
+                "from": "body",
+                "rawValue": "",
+                "rawImport": ""
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": true,
+                "rule": "required"
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "workspace_id",
+                "asWhere": false,
+                "asAction": true
+            }
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "get": {
+                "from": "body",
+                "rawValue": "",
+                "rawImport": ""
+            },
+            "sanitizer": {
+                "has": true,
+                "rule": "strip_tags"
+            },
+            "validator": {
+                "has": true,
+                "rule": "required|string|max:255"
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "title",
+                "asWhere": false,
+                "asAction": true
             }
         }
     ],

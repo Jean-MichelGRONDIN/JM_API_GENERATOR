@@ -1,0 +1,30 @@
+{
+    "method": "GET",
+    "targetTable": "actions",
+    "data": [
+        {
+            "name": "workspace_id",
+            "type": "string",
+            "get": {
+                "from": "params",
+                "rawValue": "",
+                "rawImport": ""
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "workspace_id",
+                "asWhere": true,
+                "asAction": false
+            }
+        }
+    ],
+    "middlewares": ["hasAuth"]
+}
