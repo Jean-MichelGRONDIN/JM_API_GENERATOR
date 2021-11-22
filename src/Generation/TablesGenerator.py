@@ -16,6 +16,8 @@ class TablesGenerator:
         jsonFile = JsonHandler(readJsonFile(filePath))
         modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
         modelGenerator.run()
+        # get dest file path
+        # append to list
         return
 
     def generateMigration(self, migrationName, files):
@@ -24,9 +26,11 @@ class TablesGenerator:
         orderList = sorted(jsonFiles, key=lambda elem: elem[0])
         modelGenerator = MigrationGenerator(destPath, migrationName, orderList)
         modelGenerator.run()
+        # get dest file path
+        # append to list
         return
 
-    def run(self):
+    def generate(self):
         print('\nRun tables generator\n')
         foldersPath = self.confSrc + "/Tables"
         folders = getDirFolders(foldersPath)
@@ -40,4 +44,8 @@ class TablesGenerator:
                 self.generateModel(filePath, file)
             self.generateMigration(migrationName, filesPaths)
         return
+
+    def run(self):
+        self.generate()
+        # clear files that are in the lists
 
