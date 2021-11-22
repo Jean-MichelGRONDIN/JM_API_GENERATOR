@@ -3,6 +3,7 @@ from .MigrationGenerator import MigrationGenerator
 from .DistPaths import MODEL_DEST, MIGRATION_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
 from ..Tools.JsonHandler import JsonHandler
+from ..Tools.CleanningHandler import cleanModelFile, cleanMigrationFile
 from os.path import basename
 
 class TablesGenerator:
@@ -16,8 +17,8 @@ class TablesGenerator:
         jsonFile = JsonHandler(readJsonFile(filePath))
         modelGenerator = ModelGenerator(destPath, fileName, jsonFile)
         modelGenerator.run()
-        # get dest file path => modelGenerator.getDistFilePath()
-        # append to list
+        distFilePath = modelGenerator.getDistFilePath()
+        cleanModelFile(distFilePath)
         return
 
     def generateMigration(self, migrationName, files):
@@ -26,8 +27,8 @@ class TablesGenerator:
         orderList = sorted(jsonFiles, key=lambda elem: elem[0])
         migrationGenerator = MigrationGenerator(destPath, migrationName, orderList)
         migrationGenerator.run()
-        # get dest file path => migrationGenerator.getDistFilePath()
-        # append to list
+        distFilePath = migrationGenerator.getDistFilePath()
+        cleanMigrationFile(distFilePath)
         return
 
     def generate(self):
