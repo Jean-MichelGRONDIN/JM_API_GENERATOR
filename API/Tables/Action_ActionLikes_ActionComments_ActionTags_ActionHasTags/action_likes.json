@@ -11,8 +11,8 @@
                 "value": ""
             },
             "references": {
-                "isRef": false,
-                "refTo": ""
+                "isRef": true,
+                "refTo": "actions.id"
             }
         },
         {
@@ -25,8 +25,8 @@
                 "value": ""
             },
             "references": {
-                "isRef": true,
-                "refTo": "actions.id"
+                "isRef": false,
+                "refTo": ""
             }
         }
     ]

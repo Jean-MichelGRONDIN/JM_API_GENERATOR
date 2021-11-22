@@ -1,0 +1,1 @@
+        table.foreign('$MIGRATION_REFERENCE_FIELD_NAME$').references('$MIGRATION_REFERENCE_FIELD_TARGET$');
