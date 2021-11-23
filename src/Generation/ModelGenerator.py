@@ -3,11 +3,17 @@ from ..Tools.FilesHandler import readFile, writeInFileByPath
 from ..Tools.CaseHandler import toTitleCamelCase
 from .TemplatesPaths import MODEL_TEMPLATE_PATH, MODEL_FIELD_TEMPLATE_PATH
 
+def getModelFileNameFromFileName(fileName):
+    return toTitleCamelCase(fileName[:-5]) + ".ts"
+
+def getModelFileNameFromCatName(catName):
+    return toTitleCamelCase(catName) + ".ts"
+
 class ModelGenerator:
     def __init__(self, distPath, fileName, jsonFile):
         self.distPath = distPath
-        self.fileName = toTitleCamelCase(fileName[:-5])
-        self.distFile = self.distPath + "/" + self.fileName + ".ts"
+        self.fileName = getModelFileNameFromFileName(fileName)
+        self.distFile = self.distPath + "/" + self.fileName
         self.json = jsonFile
         self.template = readFile(MODEL_TEMPLATE_PATH)
         print('\nSetup model generator\n', self.distFile, "\n")
@@ -29,7 +35,7 @@ class ModelGenerator:
 
 
     def replaceFlags(self):
-        self.template = self.template.replace(MODEL_NAME, self.fileName)
+        self.template = self.template.replace(MODEL_NAME, self.fileName[:-3])
         self.template = self.template.replace(MODEL_FIELDS, self.printFields())
 
     def getDistFilePath(self):
