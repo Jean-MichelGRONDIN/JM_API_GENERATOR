@@ -29,6 +29,10 @@ def cleanEndOfImportComma(data):
     data = sub(r',[ ]+}', ' }', data)
     return data
 
+def cleanEndOFObjectListComma(data):
+    data = sub(r',[\n, ]+}', '\n    }', data)
+    return data
+
 
 def cleanFile(filePath, rules):
     content = readFile(filePath)
@@ -61,5 +65,14 @@ def cleanRouterFile(filePath):
         cleanLongLineReturnChains,
         cleanMultiplesLineReturnBetweenImports,
         cleanEndOfImportComma
+    ]
+    cleanFile(filePath, rules)
+
+def cleanSanitizerFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanEndOFObjectListComma
     ]
     cleanFile(filePath, rules)

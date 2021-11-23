@@ -9,8 +9,8 @@ from ..Tools.CaseHandler import toCodeCamelCase
 from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH
 from .TemplatesPaths import ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH, ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH, ROUTER_ROUTE_TEMPLATE_PATH
 from .TemplatesPaths import ROUTER_ROUTE_PARAM_TEMPLATE_PATH, ROUTER_ROUTE_MIDDLEWARE_TEMPLATE_PATH
-from .SanitizerGenerator import getSanitiZerFileName, getSanitiZerMiddlewareName
-from .ValidatorGenerator import getValidatorFileName, getValidatorMiddlewareName
+from .SanitizerGenerator import getSanitiZerFileName, getSanitiZerMiddlewareName, hasSanitizer
+from .ValidatorGenerator import getValidatorFileName, getValidatorMiddlewareName, hasValidator
 from .ControllerGenerator import getControllerFileName, getControllerMiddlewareName
 
 class RouterGenerator:
@@ -38,27 +38,11 @@ class RouterGenerator:
         return data
 
 
-    def hasSanitizer(self):
-        data = self.json.access('data')
-        for elem in data:
-            elemJson = JsonHandler(elem)
-            if elemJson.access('sanitizer.has'):
-                return True
-        return False
-
     def importSanitizer(self):
         self.template = self.template.replace(ROUTER_SANITIZER_IMPORTS, readFile(ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH))
         self.template = self.template.replace(ROUTER_SANITIZER_IMPORT_FILE_NAME, getSanitiZerFileName(self.catName)[:-3])
         self.template = self.template.replace(ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, getSanitiZerMiddlewareName(self.catName, self.srcFileName[:-5]) + ", " + ROUTER_SANITIZER_IMPORT_SANITIZER_NAME)
 
-
-    def hasValidator(self):
-        data = self.json.access('data')
-        for elem in data:
-            elemJson = JsonHandler(elem)
-            if elemJson.access('validator.has'):
-                return True
-        return False
 
     def importValidator(self):
         self.template = self.template.replace(ROUTER_VALIDATOR_IMPORTS, readFile(ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH))
@@ -100,19 +84,17 @@ class RouterGenerator:
         data = data.replace(ROUTER_ROUTE_CAT_NAME, toCodeCamelCase(self.srcFileName[:-5]))
         data = self.generateRouteParams(data)
         data = self.generateRouteMiddlewares(data)
-        # data = data.replace(ROUTER_ROUTE_MIDDLEWARE_CALL, self.json.access('middlewares'))
         data = data.replace(ROUTER_ROUTE_CONTROLLER_CALL, getControllerMiddlewareName(self.srcFileName[:-5]))
         data += "\n\n"
         data += ROUTER_ROUTES
         return data
-        # return self.srcFileName[:-5] + "\n" + ROUTER_ROUTES
 
 
     def replaceFlags(self):
         self.template = self.template.replace(ROUTER_MIDDLEWARE_IMPORTS, self.importMiddlewares())
-        if self.hasSanitizer():
+        if hasSanitizer(self.json):
             self.importSanitizer()
-        if self.hasValidator():
+        if hasValidator(self.json):
             self.importValidator()
         self.importController()
         self.template = self.template.replace(ROUTER_ROUTES, self.generateRoute())

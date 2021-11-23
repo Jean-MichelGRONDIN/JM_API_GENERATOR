@@ -36,6 +36,15 @@ ROUTER_ROUTE_PARAM_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteP
 ROUTER_ROUTE_MIDDLEWARE_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterMiddlewareTemplate.ts"
 
 # Sanitizer
+
+SANITIZER_TEMPLATE_PATH = "./Templates/Files/Router/SanitizerTemplate.ts"
+
+SANITIZER_MIDDLEWARE_TEMPLATE_PATH = "./Templates/Files/Router/Sanitizer/SanitizerMiddlewareTemplate.ts"
+
+SANITIZER_MIDDLEWARE_RULES_TEMPLATE_PATH = "./Templates/Files/Router/Sanitizer/SanitizerMiddlewareRulesTemplate.ts"
+
+SANITIZER_MIDDLEWARE_RULES_FIELDS_TEMPLATE_PATH = "./Templates/Files/Router/Sanitizer/SanitizerMiddlewareRulesFieldTemplate.ts"
+
 # Validator
 # Controller
 # DataFromRequest
