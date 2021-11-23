@@ -21,6 +21,15 @@ def cleanLongLineReturnBeforeDotComma(data):
     data = sub(r'[\n]+;', ';', data)
     return data
 
+def cleanMultiplesLineReturnBetweenImports(data):
+    data = sub(r'\n[\n, ]+import', '\nimport', data)
+    return data
+
+def cleanEndOfImportComma(data):
+    data = sub(r',[ ]+}', ' }', data)
+    return data
+
+
 def cleanFile(filePath, rules):
     content = readFile(filePath)
     for step in rules:
@@ -48,6 +57,9 @@ def cleanMigrationFile(filePath):
 def cleanRouterFile(filePath):
     rules = [
         replaceTabsBySpaces,
-        cleanTags
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanMultiplesLineReturnBetweenImports,
+        cleanEndOfImportComma
     ]
     cleanFile(filePath, rules)
