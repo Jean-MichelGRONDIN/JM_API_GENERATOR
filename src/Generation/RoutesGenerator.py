@@ -9,6 +9,7 @@ class RoutesGenerator:
         print('\nSetup routes generator\n')
         self.confSrc = src
         self.generationDest = dist
+        self.generatedRouters = []
 
     def generateRouter(self, catName, srcFilePath, srcFileName):
         destPath = self.generationDest + ROUTER_DEST
@@ -16,13 +17,21 @@ class RoutesGenerator:
         generator = RouterGenerator(catName, destPath, srcFileName, jsonFile)
         generator.run()
         distFilePath = generator.getDistFilePath()
-        cleanRouterFile(distFilePath)
+        if distFilePath not in self.generatedRouters:
+            self.generatedRouters.append(distFilePath)
         return
 
     def generateRoute(self, catName, srcFilePath, srcFileName):
         self.generateRouter(catName, srcFilePath, srcFileName)
         return
 
+
+    def cleanRouters(self):
+        for router in self.generatedRouters:
+            cleanRouterFile(router)
+
+    def cleanFiles(self):
+        self.cleanRouters()
 
     def generate(self):
         print('\nRun routes generator\n')
@@ -34,6 +43,7 @@ class RoutesGenerator:
             for file in files:
                 filePath = catPath + "/" + file
                 self.generateRoute(catName, filePath, file)
+        self.cleanFiles()
         return
 
     def run(self):

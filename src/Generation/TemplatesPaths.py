@@ -21,7 +21,11 @@ MIGRATION_DOWN_TEMPLATE_PATH = "./Templates/Files/Tables/Down/MigrationDownTempl
 # Router
 ROUTER_TEMPLATE_PATH = "./Templates/Files/Router/RouterTemplate.ts"
 
-ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterMiddleWareImportTemplate.ts"
+ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterMiddlewareImportTemplate.ts"
+
+ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterSanitizerImportTemplate.ts"
+
+ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterValidatorImportTemplate.ts"
 
 # Sanitizer
 # Validator
