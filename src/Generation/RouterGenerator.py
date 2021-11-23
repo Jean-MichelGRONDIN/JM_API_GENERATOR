@@ -2,6 +2,9 @@ from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_R
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
 from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH
+from .SanitizerGenerator import getSanitiZerFileName
+from .ValidatorGenerator import getValidatorFileName
+from .ControllerGenerator import getControllerFileName
 
 class RouterGenerator:
     def __init__(self, catName, distPath, srcFileName, jsonFile):
