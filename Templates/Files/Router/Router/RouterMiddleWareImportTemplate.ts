@@ -1,0 +1,1 @@
+import { $ROUTER_MIDDLEWARE_IMPORT_NAME$ } from '../middleware/$ROUTER_MIDDLEWARE_IMPORT_NAME$';
