@@ -1,8 +1,14 @@
-from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_VALIDATOR_IMPORTS, ROUTER_CONTROLLER_IMPORTS, ROUTER_ROUTES, ROUTER_MIDDLEWARE_IMPORT_NAME, ROUTER_SANITIZER_IMPORT_FILE_NAME, ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, ROUTER_VALIDATOR_IMPORT_FILE_NAME, ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME, ROUTER_CONTROLLER_IMPORT_FILE_NAME, ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME
+from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_VALIDATOR_IMPORTS, ROUTER_CONTROLLER_IMPORTS, ROUTER_ROUTES
+from .Flags import ROUTER_MIDDLEWARE_IMPORT_NAME, ROUTER_SANITIZER_IMPORT_FILE_NAME, ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, ROUTER_VALIDATOR_IMPORT_FILE_NAME
+from .Flags import ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME, ROUTER_CONTROLLER_IMPORT_FILE_NAME, ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME
+from .Flags import ROUTER_ROUTE_TYPE, ROUTER_ROUTE_TITLE, ROUTER_ROUTE_DESCRIPTION, ROUTER_ROUTE_TYPE_CALL, ROUTER_ROUTE_CAT_NAME, ROUTER_ROUTE_PARAM_FIELD
+from .Flags import ROUTER_ROUTE_PARAM_NAME, ROUTER_ROUTE_MIDDLEWARE_CALL, ROUTER_ROUTE_CONTROLLER_CALL
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH, ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH, ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH
+from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH
+from .TemplatesPaths import ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH, ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH, ROUTER_ROUTE_TEMPLATE_PATH
+from .TemplatesPaths import ROUTER_ROUTE_PARAM_TEMPLATE_PATH
 from .SanitizerGenerator import getSanitiZerFileName, getSanitiZerMiddlewareName
 from .ValidatorGenerator import getValidatorFileName, getValidatorMiddlewareName
 from .ControllerGenerator import getControllerFileName, getControllerMiddlewareName
@@ -66,6 +72,34 @@ class RouterGenerator:
         self.template = self.template.replace(ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME, getControllerMiddlewareName(self.srcFileName[:-5]) + ", " + ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME)
 
 
+    def generateRouteParams(self, ret):
+        data = self.json.access('data')
+        for elem in data:
+            elemJson = JsonHandler(elem)
+            if elemJson.access('get.from') == "params":
+                ret = ret.replace(ROUTER_ROUTE_PARAM_FIELD, readFile(ROUTER_ROUTE_PARAM_TEMPLATE_PATH))
+                ret = ret.replace(ROUTER_ROUTE_PARAM_NAME, elemJson.access('name'))
+        ret = ret.replace(ROUTER_ROUTE_PARAM_FIELD, "")
+        return ret
+
+
+    def generateRoute(self):
+        data = ""
+        data += readFile(ROUTER_ROUTE_TEMPLATE_PATH)
+        data = data.replace(ROUTER_ROUTE_TYPE, self.json.access('method').upper())
+        data = data.replace(ROUTER_ROUTE_TITLE, self.json.access('title'))
+        data = data.replace(ROUTER_ROUTE_DESCRIPTION, self.json.access('description'))
+        data = data.replace(ROUTER_ROUTE_TYPE_CALL, self.json.access('method').lower())
+        data = data.replace(ROUTER_ROUTE_CAT_NAME, toCodeCamelCase(self.srcFileName[:-5]))
+        data = self.generateRouteParams(data)
+        # data = data.replace(ROUTER_ROUTE_MIDDLEWARE_CALL, self.json.access('middlewares'))
+        data = data.replace(ROUTER_ROUTE_CONTROLLER_CALL, getControllerMiddlewareName(self.srcFileName[:-5]))
+        data += "\n\n"
+        data += ROUTER_ROUTES
+        return data
+        # return self.srcFileName[:-5] + "\n" + ROUTER_ROUTES
+
+
     def replaceFlags(self):
         self.template = self.template.replace(ROUTER_MIDDLEWARE_IMPORTS, self.importMiddlewares())
         if self.hasSanitizer():
@@ -73,7 +107,7 @@ class RouterGenerator:
         if self.hasValidator():
             self.importValidator()
         self.importController()
-        self.template = self.template.replace(ROUTER_ROUTES, self.srcFileName[:-5] + "\n" + ROUTER_ROUTES)
+        self.template = self.template.replace(ROUTER_ROUTES, self.generateRoute())
 
     def getDistFilePath(self):
         return self.distFile

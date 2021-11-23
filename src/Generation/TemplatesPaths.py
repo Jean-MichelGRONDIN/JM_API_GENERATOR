@@ -29,6 +29,9 @@ ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterV
 
 ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterControllerImportTemplate.ts"
 
+ROUTER_ROUTE_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteTemplate.ts"
+
+ROUTER_ROUTE_PARAM_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteParamTemplate.ts"
 
 # Sanitizer
 # Validator
