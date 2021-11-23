@@ -76,3 +76,12 @@ def cleanSanitizerFile(filePath):
         cleanEndOFObjectListComma
     ]
     cleanFile(filePath, rules)
+
+def cleanValidatorFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanEndOFObjectListComma
+    ]
+    cleanFile(filePath, rules)

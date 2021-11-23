@@ -1,10 +1,10 @@
 from .RouterGenerator import RouterGenerator
-from .DistPaths import ROUTER_DEST, SANITIZER_DEST
+from .DistPaths import ROUTER_DEST, SANITIZER_DEST, VALIDATOR_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
 from ..Tools.JsonHandler import JsonHandler
-from ..Tools.CleanningHandler import cleanRouterFile, cleanSanitizerFile
+from ..Tools.CleanningHandler import cleanRouterFile, cleanSanitizerFile, cleanValidatorFile
 from .SanitizerGenerator import hasSanitizer, SanitizerGenerator
-from .ValidatorGenerator import hasValidator
+from .ValidatorGenerator import hasValidator, ValidatorGenerator
 
 class RoutesGenerator:
     def __init__(self, src, dist):
@@ -39,23 +39,33 @@ class RoutesGenerator:
                 self.generatedSanitizers.append(distFilePath)
         return
 
+    def generateValidator(self, catName, srcFilePath, srcFileName):
+        destPath = self.generationDest + VALIDATOR_DEST
+        jsonFile = JsonHandler(readJsonFile(srcFilePath))
+        if hasValidator(jsonFile):
+            generator = ValidatorGenerator(catName, destPath, srcFileName, jsonFile)
+            generator.run()
+            distFilePath = generator.getDistFilePath()
+            if distFilePath not in self.generatedSanitizers:
+                self.generatedSanitizers.append(distFilePath)
+        return
+
     def generateRoute(self, catName, srcFilePath, srcFileName):
         self.generateRouter(catName, srcFilePath, srcFileName)
         self.generateSanitizer(catName, srcFilePath, srcFileName)
+        self.generateValidator(catName, srcFilePath, srcFileName)
         return
 
 
-    def cleanRouters(self):
-        for router in self.generatedRouters:
-            cleanRouterFile(router)
-
-    def cleanSanitizers(self):
-        for router in self.generatedSanitizers:
-            cleanSanitizerFile(router)
+    def cleanFilesListWithRule(self, list, func):
+        for file in list:
+            func(file)
 
     def cleanFiles(self):
-        self.cleanRouters()
-        self.cleanSanitizers()
+        self.cleanFilesListWithRule(self.generatedRouters, cleanRouterFile)
+        self.cleanFilesListWithRule(self.generatedSanitizers, cleanSanitizerFile)
+        self.cleanFilesListWithRule(self.generatedValidators, cleanValidatorFile)
+
 
     def generate(self):
         print('\nRun routes generator\n')
