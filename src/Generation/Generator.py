@@ -1,4 +1,5 @@
 from .TablesGenerator import TablesGenerator
+from .RoutesGenerator import RoutesGenerator
 
 class Generator:
     def __init__(self, confSrc):
@@ -18,7 +19,8 @@ class Generator:
         tablesGenerator = TablesGenerator(self.confSrc, self.generationDest)
         tablesGenerator.run()
 
-        self.generateRoutes()
+        tablesGenerator = RoutesGenerator(self.confSrc, self.generationDest)
+        tablesGenerator.run()
         #     # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
         #     # replace every \t par 4 espaces
         # except Exception as error:

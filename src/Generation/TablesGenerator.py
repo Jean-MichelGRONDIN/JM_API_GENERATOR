@@ -48,5 +48,4 @@ class TablesGenerator:
 
     def run(self):
         self.generate()
-        # clear files that are in the lists
 

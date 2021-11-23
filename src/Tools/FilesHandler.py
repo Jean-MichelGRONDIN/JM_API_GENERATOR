@@ -1,5 +1,5 @@
 from os import listdir, makedirs
-from os.path import isfile, isdir, join, basename, dirname
+from os.path import isfile, isdir, join, basename, dirname, isfile
 from json import loads
 
 def getDirFolders(path):
@@ -38,4 +38,9 @@ def createFile(name):
 def creatFileByPath(path):
     writeInFileByPath(path, "")
 
+def genrateFileFromTemplateAndRead(destFilePath, templatePath):
+    if isfile(destFilePath) == False:
+        template = readFile(templatePath)
+        writeInFileByPath(destFilePath, template)
+    return readFile(destFilePath)
 

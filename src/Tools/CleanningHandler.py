@@ -21,26 +21,33 @@ def cleanLongLineReturnBeforeDotComma(data):
     data = sub(r'[\n]+;', ';', data)
     return data
 
+def cleanFile(filePath, rules):
+    content = readFile(filePath)
+    for step in rules:
+        content = step(content)
+    writeInFile(filePath, content)
+
 
 def cleanModelFile(filePath):
-    cleanningSteps = [
+    rules = [
         replaceTabsBySpaces,
         cleanTags,
         cleanDuplicatedLineReturns
     ]
-    content = readFile(filePath)
-    for step in cleanningSteps:
-        content = step(content)
-    writeInFile(filePath, content)
+    cleanFile(filePath, rules)
 
 def cleanMigrationFile(filePath):
-    cleanningSteps = [
+    rules = [
         replaceTabsBySpaces,
         cleanTags,
         cleanLongLineReturnChains,
         cleanLongLineReturnBeforeDotComma
     ]
-    content = readFile(filePath)
-    for step in cleanningSteps:
-        content = step(content)
-    writeInFile(filePath, content)
+    cleanFile(filePath, rules)
+
+def cleanRouterFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags
+    ]
+    cleanFile(filePath, rules)
