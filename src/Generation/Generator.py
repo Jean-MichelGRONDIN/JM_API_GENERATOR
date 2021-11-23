@@ -44,3 +44,8 @@ class Generator:
 # Evolution ?: (Ne pas faire que du CRUD)
 # Pouvoir les closes where des query ?
 # ...
+
+# validators
+# DTOs
+# Controllers
+# Actions (check d'abord les where puis les actions dans l'ordre ou c'est arriver (input, update, ...))
