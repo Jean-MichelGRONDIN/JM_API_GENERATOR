@@ -10,4 +10,8 @@ SANITIZER_DEST = "src/request/sanitizer/"
 
 VALIDATOR_DEST = "src/request/validator/"
 
+DTO_DEST = "src/dataTransfertObject/"
+
 CONTROLLER_DEST = "src/controller/"
+
+ACTION_DEST = "src/action/"

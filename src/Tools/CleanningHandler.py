@@ -29,8 +29,12 @@ def cleanEndOfImportComma(data):
     data = sub(r',[ ]+}', ' }', data)
     return data
 
-def cleanEndOFObjectListComma(data):
+def cleanEndOFObjectListCommaForSanitAndValid(data):
     data = sub(r',[\n, ]+}', '\n    }', data)
+    return data
+
+def cleanEndOFObjectListCommaForDTO(data):
+    data = sub(r',[\n, ]+}', '\n}', data)
     return data
 
 
@@ -73,7 +77,7 @@ def cleanSanitizerFile(filePath):
         replaceTabsBySpaces,
         cleanTags,
         cleanLongLineReturnChains,
-        cleanEndOFObjectListComma
+        cleanEndOFObjectListCommaForSanitAndValid
     ]
     cleanFile(filePath, rules)
 
@@ -82,6 +86,18 @@ def cleanValidatorFile(filePath):
         replaceTabsBySpaces,
         cleanTags,
         cleanLongLineReturnChains,
-        cleanEndOFObjectListComma
+        cleanEndOFObjectListCommaForSanitAndValid
     ]
     cleanFile(filePath, rules)
+
+def cleanDTOFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanEndOFObjectListCommaForDTO
+    ]
+    cleanFile(filePath, rules)
+
+
+
