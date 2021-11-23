@@ -15,3 +15,5 @@ MIGRATION_UP_TEMPLATE_FIELD_DEFAULT_PATH = "./Templates/Files/Tables/Up/Migratio
 MIGRATION_UP_TEMPLATE_REFERENCE_PATH = "./Templates/Files/Tables/Up/MigrationUpTemplateReference.ts"
 
 MIGRATION_DOWN_TEMPLATE_PATH = "./Templates/Files/Tables/Down/MigrationDownTemplate.ts"
+
+ROUTER_TEMPLATE_PATH = "./Templates/Files/Router/RouterTemplate.ts"
