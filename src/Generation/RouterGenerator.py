@@ -1,8 +1,8 @@
-from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_VALIDATOR_IMPORTS, ROUTER_CONTROLLER_IMPORTS, ROUTER_ROUTES, ROUTER_MIDDLEWARE_IMPORT_NAME, ROUTER_SANITIZER_IMPORT_FILE_NAME, ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, ROUTER_VALIDATOR_IMPORT_FILE_NAME, ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME
+from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_VALIDATOR_IMPORTS, ROUTER_CONTROLLER_IMPORTS, ROUTER_ROUTES, ROUTER_MIDDLEWARE_IMPORT_NAME, ROUTER_SANITIZER_IMPORT_FILE_NAME, ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, ROUTER_VALIDATOR_IMPORT_FILE_NAME, ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME, ROUTER_CONTROLLER_IMPORT_FILE_NAME, ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH, ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH
+from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH, ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH, ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH
 from .SanitizerGenerator import getSanitiZerFileName, getSanitiZerMiddlewareName
 from .ValidatorGenerator import getValidatorFileName, getValidatorMiddlewareName
 from .ControllerGenerator import getControllerFileName, getControllerMiddlewareName
@@ -60,14 +60,19 @@ class RouterGenerator:
         self.template = self.template.replace(ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME, getValidatorMiddlewareName(self.catName, self.srcFileName[:-5]) + ", " + ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME)
 
 
+    def importController(self):
+        self.template = self.template.replace(ROUTER_CONTROLLER_IMPORTS, readFile(ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH))
+        self.template = self.template.replace(ROUTER_CONTROLLER_IMPORT_FILE_NAME, getControllerFileName(self.catName)[:-3])
+        self.template = self.template.replace(ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME, getControllerMiddlewareName(self.srcFileName[:-5]) + ", " + ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME)
+
+
     def replaceFlags(self):
-        print(self.template)
         self.template = self.template.replace(ROUTER_MIDDLEWARE_IMPORTS, self.importMiddlewares())
         if self.hasSanitizer():
             self.importSanitizer()
         if self.hasValidator():
             self.importValidator()
-        # self.template = self.template.replace(ROUTER_CONTROLLER_IMPORTS, self.fileName)
+        self.importController()
         self.template = self.template.replace(ROUTER_ROUTES, self.srcFileName[:-5] + "\n" + ROUTER_ROUTES)
 
     def getDistFilePath(self):
