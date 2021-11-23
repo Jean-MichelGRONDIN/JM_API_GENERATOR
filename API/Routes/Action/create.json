@@ -1,4 +1,6 @@
 {
+    "title": "create a new action",
+    "description": "create a new action from argument retrieved from the body of the request",
     "method": "POST",
     "targetTable": "actions",
     "data": [

@@ -1,4 +1,6 @@
 {
+    "title": "update an action",
+    "description": "update the action whose id is given as route a parameter with the argument given in the body",
     "method": "PUT",
     "targetTable": "actions",
     "data": [

@@ -1,4 +1,6 @@
 {
+    "title": "retrieve all action of a workspace",
+    "description": "retrieve all action of a workspace, with the workspace_id given as a route parameter",
     "method": "GET",
     "targetTable": "actions",
     "data": [

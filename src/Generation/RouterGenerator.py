@@ -1,4 +1,4 @@
-from .Flags import MODEL_NAME, MODEL_FIELDS, MODEL_FIELD_NAME, MODEL_FIELD_TYPE
+from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_REQUEST_IMPORTS, ROUTER_CONTROLLER_IMPORTS, ROUTER_ROUTES
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
 from .TemplatesPaths import ROUTER_TEMPLATE_PATH, MODEL_FIELD_TEMPLATE_PATH

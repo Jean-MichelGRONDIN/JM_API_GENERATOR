@@ -1,4 +1,6 @@
 {
+    "title": "delete an action",
+    "description": "delete the action whose id is given as a route parameter",
     "method": "DELETE",
     "targetTable": "actions",
     "data": [
