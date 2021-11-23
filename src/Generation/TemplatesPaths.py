@@ -33,6 +33,8 @@ ROUTER_ROUTE_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteTemplat
 
 ROUTER_ROUTE_PARAM_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteParamTemplate.ts"
 
+ROUTER_ROUTE_MIDDLEWARE_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterMiddlewareTemplate.ts"
+
 # Sanitizer
 # Validator
 # Controller

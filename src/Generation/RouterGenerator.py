@@ -2,13 +2,13 @@ from .Flags import ROUTER_MIDDLEWARE_IMPORTS, ROUTER_SANITIZER_IMPORTS, ROUTER_V
 from .Flags import ROUTER_MIDDLEWARE_IMPORT_NAME, ROUTER_SANITIZER_IMPORT_FILE_NAME, ROUTER_SANITIZER_IMPORT_SANITIZER_NAME, ROUTER_VALIDATOR_IMPORT_FILE_NAME
 from .Flags import ROUTER_VALIDATOR_IMPORT_VALIDATOR_NAME, ROUTER_CONTROLLER_IMPORT_FILE_NAME, ROUTER_CONTROLLER_IMPORT_SANITIZER_NAME
 from .Flags import ROUTER_ROUTE_TYPE, ROUTER_ROUTE_TITLE, ROUTER_ROUTE_DESCRIPTION, ROUTER_ROUTE_TYPE_CALL, ROUTER_ROUTE_CAT_NAME, ROUTER_ROUTE_PARAM_FIELD
-from .Flags import ROUTER_ROUTE_PARAM_NAME, ROUTER_ROUTE_MIDDLEWARE_CALL, ROUTER_ROUTE_CONTROLLER_CALL
+from .Flags import ROUTER_ROUTE_PARAM_NAME, ROUTER_ROUTE_MIDDLEWARE_CALL, ROUTER_ROUTE_CONTROLLER_CALL, ROUTER_ROUTE_MIDDLEWARE_NAME
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
 from .TemplatesPaths import ROUTER_TEMPLATE_PATH, ROUTER_MIDDLEWARE_IMPORT_TEMPLATE_PATH, ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH
 from .TemplatesPaths import ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH, ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH, ROUTER_ROUTE_TEMPLATE_PATH
-from .TemplatesPaths import ROUTER_ROUTE_PARAM_TEMPLATE_PATH
+from .TemplatesPaths import ROUTER_ROUTE_PARAM_TEMPLATE_PATH, ROUTER_ROUTE_MIDDLEWARE_TEMPLATE_PATH
 from .SanitizerGenerator import getSanitiZerFileName, getSanitiZerMiddlewareName
 from .ValidatorGenerator import getValidatorFileName, getValidatorMiddlewareName
 from .ControllerGenerator import getControllerFileName, getControllerMiddlewareName
@@ -82,6 +82,13 @@ class RouterGenerator:
         ret = ret.replace(ROUTER_ROUTE_PARAM_FIELD, "")
         return ret
 
+    def generateRouteMiddlewares(self, ret):
+        middlewares = self.json.access('middlewares')
+        for elem in middlewares:
+            ret = ret.replace(ROUTER_ROUTE_MIDDLEWARE_CALL, readFile(ROUTER_ROUTE_MIDDLEWARE_TEMPLATE_PATH))
+            ret = ret.replace(ROUTER_ROUTE_MIDDLEWARE_NAME, elem)
+        ret = ret.replace(ROUTER_ROUTE_MIDDLEWARE_CALL, "")
+        return ret
 
     def generateRoute(self):
         data = ""
@@ -92,6 +99,7 @@ class RouterGenerator:
         data = data.replace(ROUTER_ROUTE_TYPE_CALL, self.json.access('method').lower())
         data = data.replace(ROUTER_ROUTE_CAT_NAME, toCodeCamelCase(self.srcFileName[:-5]))
         data = self.generateRouteParams(data)
+        data = self.generateRouteMiddlewares(data)
         # data = data.replace(ROUTER_ROUTE_MIDDLEWARE_CALL, self.json.access('middlewares'))
         data = data.replace(ROUTER_ROUTE_CONTROLLER_CALL, getControllerMiddlewareName(self.srcFileName[:-5]))
         data += "\n\n"
