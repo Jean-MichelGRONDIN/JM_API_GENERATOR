@@ -1,8 +1,12 @@
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import DTO_TEMPLATE_PATH, DTO_DUO_TEMPLATE_PATH#SANITIZER_TEMPLATE_PATH, SANITIZER_MIDDLEWARE_TEMPLATE_PATH, SANITIZER_MIDDLEWARE_RULES_TEMPLATE_PATH
-from .Flags import DTO_PLACEHOLDER, DTO_STRUC_NAME, DTO_FUNC_NAME#SANITIZER_MIDDLEWARES, SANITIZER_MIDDLEWARE_NAME, SANITIZER_MIDDLEWARE_RULES, SANITIZER_MIDDLEWARE_RULE_NAME, SANITIZER_MIDDLEWARE_RULE_VALUE
+from .TemplatesPaths import DTO_TEMPLATE_PATH, DTO_DUO_TEMPLATE_PATH, DTO_STRUC_FIELD_TEMPLATE_PATH, DTO_FUNC_RETRIEVES_TEMPLATE_PATH
+from .TemplatesPaths import DTO_FUNC_RETRIEVE_FROM_BODY_TEMPLATE_PATH, DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH, DTO_RAW_IMPORT_TEMPLATE_PATH
+from .Flags import DTO_RAW_IMPORT_PLACEHOLDER, DTO_PLACEHOLDER, DTO_STRUC_NAME, DTO_FUNC_NAME
+from .Flags import DTO_STRUC_FIELDS, DTO_FUNC_RETRIEVES, DTO_STRUC_FIELD_NAME, DTO_STRUC_FIELD_TYPE
+from .Flags import DTO_FUNC_RETRIEVE_NAME, DTO_FUNC_RETRIEVE_VALUE, DTO_RAW_IMPORT_VALUE
+from .Flags import DTO_FUNC_RETRIEVE_VALUE_FROM_BODY_NAME, DTO_FUNC_RETRIEVE_VALUE_FROM_PARAMS_NAME
 
 def getDTOFileName(catName):
     return toCodeCamelCase(catName + "Data.ts")
@@ -26,23 +30,61 @@ class DTOGenerator:
         print('\nSetup DTO generator\n', self.distFile, "\n")
 
 
+    def generateDTOStrucFields(self, ret, elemJson):
+        ret = ret.replace(DTO_STRUC_FIELDS, readFile(DTO_STRUC_FIELD_TEMPLATE_PATH))
+        ret = ret.replace(DTO_STRUC_FIELD_NAME, elemJson.access('name'))
+        ret = ret.replace(DTO_STRUC_FIELD_TYPE, elemJson.access('type'))
+        return ret
+
+    def getDTORetrieveValueFromBody(self, elemJson):
+        ret = ""
+        ret = readFile(DTO_FUNC_RETRIEVE_FROM_BODY_TEMPLATE_PATH)
+        ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE_FROM_BODY_NAME, elemJson.access('name'))
+        return ret
+
+    def getDTORetrieveValueFromParams(self, elemJson):
+        ret = ""
+        ret = readFile(DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH)
+        ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE_FROM_PARAMS_NAME, elemJson.access('name'))
+        return ret
+
+    def getDTORetrieveValueFromRaw(self, elemJson):
+        if elemJson.access('get.rawImport') not in self.template:
+            self.template = self.template.replace(DTO_RAW_IMPORT_PLACEHOLDER, readFile(DTO_RAW_IMPORT_TEMPLATE_PATH))
+            self.template = self.template.replace(DTO_RAW_IMPORT_VALUE, elemJson.access('get.rawImport'))
+        return elemJson.access('get.rawValue')
+
+    def getDTORetrieveValue(self, elemJson):
+        dataFrom = elemJson.access('get.from')
+        types = [["body", self.getDTORetrieveValueFromBody], ["params", self.getDTORetrieveValueFromParams], ["raw", self.getDTORetrieveValueFromRaw]]
+        for type in types:
+            if dataFrom == type[0]:
+                return type[1](elemJson)
+        return self.getDTORetrieveValueFromBody(elemJson)
+
+    def generateDTOFuncRetrieves(self, ret, elemJson):
+        ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(DTO_FUNC_RETRIEVES_TEMPLATE_PATH))
+        ret = ret.replace(DTO_FUNC_RETRIEVE_NAME, elemJson.access('name'))
+        ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE, self.getDTORetrieveValue(elemJson))
+        return ret
+
     def generateDTO(self):
         ret = ""
         ret += readFile(DTO_DUO_TEMPLATE_PATH)
         ret = ret.replace(DTO_STRUC_NAME, getDTOStrucName(self.catName, self.srcFileName[:-5]))
         ret = ret.replace(DTO_FUNC_NAME, getDTOFuncName(self.catName, self.srcFileName[:-5]))
-        # data = self.json.access('data')
-        # for elem in data:
-        #     elemJson = JsonHandler(elem)
-        #     if elemJson.access('sanitizer.has'):
-        #         ret = ret.replace(SANITIZER_MIDDLEWARE_RULES, readFile(SANITIZER_MIDDLEWARE_RULES_TEMPLATE_PATH))
-        #         ret = ret.replace(SANITIZER_MIDDLEWARE_RULE_NAME, elemJson.access('name'))
-        #         ret = ret.replace(SANITIZER_MIDDLEWARE_RULE_VALUE, elemJson.access('sanitizer.rule'))
-        # ret = ret.replace(SANITIZER_MIDDLEWARE_RULES, "")
+        data = self.json.access('data')
+        for elem in data:
+            elemJson = JsonHandler(elem)
+            ret = self.generateDTOStrucFields(ret, elemJson)
+            ret = self.generateDTOFuncRetrieves(ret, elemJson)
+        ret = ret.replace(DTO_STRUC_FIELDS, "")
+        ret = ret.replace(DTO_FUNC_RETRIEVES, "")
         return ret
 
     def replaceFlags(self):
-        self.template = self.template.replace(DTO_PLACEHOLDER, self.generateDTO())
+        generatedDto = self.generateDTO()
+        self.template = self.template.replace(DTO_PLACEHOLDER, generatedDto)
 
     def getDistFilePath(self):
         return self.distFile

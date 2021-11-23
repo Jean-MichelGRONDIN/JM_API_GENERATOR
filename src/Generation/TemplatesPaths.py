@@ -58,4 +58,14 @@ DTO_TEMPLATE_PATH = "./Templates/Files/Router/DtoTemplate.ts"
 
 DTO_DUO_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoDuoTemplate.ts"
 
+DTO_STRUC_FIELD_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoStrucFieldsTemplate.ts"
+
+DTO_FUNC_RETRIEVES_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoFuncRetrievesTemplate.ts"
+
+DTO_FUNC_RETRIEVE_FROM_BODY_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoFuncRetrievesFromBodyTemplate.ts"
+
+DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoFuncRetrievesFromParamsTemplate.ts"
+
+DTO_RAW_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoRawImportTemplate.ts"
+
 # Action
