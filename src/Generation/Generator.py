@@ -48,3 +48,10 @@ class Generator:
 # DTOs
 # Controllers (quand le return d'une action c'est une structure stocker dans le fichier action => quand la method c'est get mettre le return type (split '|' [0]) dans l'import)
 # Actions (check d'abord les where puis les actions dans l'ordre ou c'est arriver (input, update, ...))
+
+# DTO en promise
+# controller hanlder DTO promise
+# Ajouter un orderby dans les fichier conf
+
+
+
