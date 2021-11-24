@@ -51,7 +51,7 @@ class Generator:
 
 # DTO en promise
 # controller hanlder DTO promise
-# Ajouter un orderby dans les fichier conf
-
+# Ajouter un orderby dans les fichier conf ( au niveau de la route orderby: has, rule)
+# Ajouter un rawQuery dans les fichiers conf (rawQuery: has, query), du coup ça change le template utiliser pour l'action
 
 
