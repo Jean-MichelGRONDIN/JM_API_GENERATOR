@@ -7,10 +7,10 @@ def getActionFileName(catName):
 def getActionName(catName, actionName):
     return toCodeCamelCase(catName + "_" + actionName + "Action")
 
-def getActionReturnType(method, fileName, catName, actionName):
+def getActionReturnType(method, fileName, catName):
     if method.lower() == "get" and fileName.lower() == "index":
-        return getActionName(catName, actionName) + "Ret|ErrorDB"
-    if method.lower() == "get":
+        return getActionName(catName, fileName) + "Ret|ErrorDB"
+    if method.lower() == "get" and fileName.lower() == "show":
         return getModelFileNameFromCatName(catName)[:-3] + "|ErrorDB"
     return "null|ErrorDB"
 

@@ -57,6 +57,10 @@ CONTROLLER_TEMPLATE_PATH = "./Templates/Files/Router/ControllerTemplate.ts"
 
 CONTROLLER_DTO_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerDTOsImport.ts"
 
+CONTROLLER_ACTION_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerActionsImport.ts"
+
+CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerModelsImport.ts"
+
 # DataFromRequest
 
 DTO_TEMPLATE_PATH = "./Templates/Files/Router/DtoTemplate.ts"

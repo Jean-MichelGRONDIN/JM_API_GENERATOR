@@ -1,0 +1,32 @@
+{
+    "title": "retrieve an action by its id",
+    "description": "retrieve an action by its id, with the action_id given as a route parameter",
+    "method": "GET",
+    "targetTable": "actions",
+    "data": [
+        {
+            "name": "action_id",
+            "type": "string",
+            "get": {
+                "from": "params",
+                "rawValue": "",
+                "rawImport": ""
+            },
+            "sanitizer": {
+                "has": false,
+                "rule": ""
+            },
+            "validator": {
+                "has": false,
+                "rule": ""
+            },
+            "correspondToField": {
+                "hasTarget": true,
+                "field": "id",
+                "asWhere": true,
+                "asAction": false
+            }
+        }
+    ],
+    "middlewares": ["doesCurrentUserExist"]
+}

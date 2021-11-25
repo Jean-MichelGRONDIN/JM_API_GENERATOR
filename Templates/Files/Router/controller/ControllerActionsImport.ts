@@ -1,1 +1,1 @@
-import { $$ } from '../action/$$';
+import { $CONTROLLER_ACTION_IMPORT_ACTION_NAMES$ } from '../action/$CONTROLLER_ACTION_IMPORT_FILE_NAME$';

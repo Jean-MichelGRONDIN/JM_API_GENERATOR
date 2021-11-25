@@ -66,12 +66,11 @@ class RoutesGenerator:
     def generateController(self, catName, srcFilePath, srcFileName):
         destPath = self.generationDest + CONTROLLER_DEST
         jsonFile = JsonHandler(readJsonFile(srcFilePath))
-        if hasValidator(jsonFile):
-            generator = ControllerGenerator(catName, destPath, srcFileName, jsonFile)
-            generator.run()
-            distFilePath = generator.getDistFilePath()
-            if distFilePath not in self.generatedControllers:
-                self.generatedControllers.append(distFilePath)
+        generator = ControllerGenerator(catName, destPath, srcFileName, jsonFile)
+        generator.run()
+        distFilePath = generator.getDistFilePath()
+        if distFilePath not in self.generatedControllers:
+            self.generatedControllers.append(distFilePath)
         return
 
     def generateRoute(self, catName, srcFilePath, srcFileName):
