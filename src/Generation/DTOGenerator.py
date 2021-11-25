@@ -1,11 +1,11 @@
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import DTO_TEMPLATE_PATH, DTO_DUO_TEMPLATE_PATH, DTO_STRUC_FIELD_TEMPLATE_PATH, DTO_FUNC_RETRIEVES_TEMPLATE_PATH
+from .TemplatesPaths import DTO_TEMPLATE_PATH, DTO_DUO_TEMPLATE_PATH, DTO_STRUC_FIELD_TEMPLATE_PATH, DTO_FUNC_RETRIEVES_TEMPLATE_PATH, DTO_ASYNC_TEMPLATE_PATH
 from .TemplatesPaths import DTO_FUNC_RETRIEVE_FROM_BODY_TEMPLATE_PATH, DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH, DTO_RAW_IMPORT_TEMPLATE_PATH
 from .Flags import DTO_RAW_IMPORT_PLACEHOLDER, DTO_PLACEHOLDER, DTO_STRUC_NAME, DTO_FUNC_NAME
 from .Flags import DTO_STRUC_FIELDS, DTO_FUNC_RETRIEVES, DTO_STRUC_FIELD_NAME, DTO_STRUC_FIELD_TYPE
-from .Flags import DTO_FUNC_RETRIEVE_NAME, DTO_FUNC_RETRIEVE_VALUE, DTO_RAW_IMPORT_VALUE
+from .Flags import DTO_FUNC_RETRIEVE_NAME, DTO_FUNC_RETRIEVE_VALUE, DTO_RAW_IMPORT_VALUE, DTO_ASYNC_PLACEHOLDER
 from .Flags import DTO_FUNC_RETRIEVE_VALUE_FROM_BODY_NAME, DTO_FUNC_RETRIEVE_VALUE_FROM_PARAMS_NAME
 
 def getDTOFileName(catName):
@@ -84,6 +84,8 @@ class DTOGenerator:
 
     def replaceFlags(self):
         generatedDto = self.generateDTO()
+        if " await " in generatedDto:
+            generatedDto.replace(DTO_ASYNC_PLACEHOLDER, readFile())
         self.template = self.template.replace(DTO_PLACEHOLDER, generatedDto)
 
     def getDistFilePath(self):

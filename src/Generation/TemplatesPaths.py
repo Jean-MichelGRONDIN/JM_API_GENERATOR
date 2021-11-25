@@ -58,6 +58,8 @@ DTO_TEMPLATE_PATH = "./Templates/Files/Router/DtoTemplate.ts"
 
 DTO_DUO_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoDuoTemplate.ts"
 
+DTO_ASYNC_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoAsyncTemplate.ts"
+
 DTO_STRUC_FIELD_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoStrucFieldsTemplate.ts"
 
 DTO_FUNC_RETRIEVES_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoFuncRetrievesTemplate.ts"
