@@ -43,8 +43,8 @@ class ControllerGenerator:
     def importActions(self):
         self.template = self.template.replace(CONTROLLER_ACTION_IMPORTS, readFile(CONTROLLER_ACTION_IMPORT_TEMPLATE_PATH))
         self.template = self.template.replace(CONTROLLER_ACTION_IMPORT_FILE_NAME, getActionFileName(self.catName)[:-3])
-        importsBloc = getActionName(self.catName, self.srcFileName[:-5])
         fileName = self.srcFileName[:-5]
+        importsBloc = getActionName(self.catName, fileName)
         if self.method.lower() == "get" and fileName.lower() == "index":
             importsBloc += ", " + self.actionReturnType[0]
         if self.method.lower() == "get" and fileName.lower() == "show":
