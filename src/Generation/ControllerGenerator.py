@@ -30,13 +30,15 @@ class ControllerGenerator:
         self.template = genrateFileFromTemplateAndRead(self.distFile, CONTROLLER_TEMPLATE_PATH)
         self.method = self.json.access('method')
         self.actionReturnType = getActionReturnType(self.method, self.srcFileName[:-5], self.catName).split('|')
+        self.DTOFuncName = getDTOFuncName(self.catName, self.srcFileName[:-5])
+        self.DTOStrucName = getDTOStrucName(self.catName, self.srcFileName[:-5])
         print('\nSetup Controller generator\n', self.distFile, "\n")
 
 
     def importDTOs(self):
         self.template = self.template.replace(CONTROLLER_DTO_IMPORTS, readFile(CONTROLLER_DTO_IMPORT_TEMPLATE_PATH))
         self.template = self.template.replace(CONTROLLER_DTO_IMPORT_FILE_NAME, getDTOFileName(self.catName)[:-3])
-        importsBloc = getDTOStrucName(self.catName, self.srcFileName[:-5]) + ", " + getDTOFuncName(self.catName, self.srcFileName[:-5])
+        importsBloc = self.DTOStrucName + ", " + self.DTOFuncName
         self.template = self.template.replace(CONTROLLER_DTO_IMPORT_DTO_NAMES, importsBloc + ", " + CONTROLLER_DTO_IMPORT_DTO_NAMES)
 
 
@@ -49,8 +51,8 @@ class ControllerGenerator:
             importsBloc += ", " + self.actionReturnType[0]
         if self.method.lower() == "get" and fileName.lower() == "show":
             self.template = self.template.replace(CONTROLLER_MODEL_IMPORTS, readFile(CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH))
-            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_FILE_NAME, getModelFileNameFromCatName(self.catName)[:-3])
-            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_MODEL_NAME, getModelFileNameFromCatName(self.catName)[:-3])
+            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_FILE_NAME, self.actionReturnType[0])
+            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_MODEL_NAME, self.actionReturnType[0])
         self.template = self.template.replace(CONTROLLER_ACTION_IMPORT_ACTION_NAMES, importsBloc + ", " + CONTROLLER_ACTION_IMPORT_ACTION_NAMES)
 
 
