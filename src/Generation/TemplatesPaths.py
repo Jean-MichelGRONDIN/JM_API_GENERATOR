@@ -61,6 +61,20 @@ CONTROLLER_ACTION_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/Co
 
 CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerModelsImport.ts"
 
+CONTROLLER_CONTROLLER_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerControllerTemplate.ts"
+
+CONTROLLER_CONTROLLER_DB_ERROR_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerDbErrorRes.ts"
+
+CONTROLLER_CONTROLLER_DTO_ERROR_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerDTOErrorRes.ts"
+
+CONTROLLER_CONTROLLER_GET_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerGetRes.ts"
+
+CONTROLLER_CONTROLLER_PUT_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerPutRes.ts"
+
+CONTROLLER_CONTROLLER_POST_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerPostRes.ts"
+
+CONTROLLER_CONTROLLER_DELETE_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerDeleteRes.ts"
+
 # DataFromRequest
 
 DTO_TEMPLATE_PATH = "./Templates/Files/Router/DtoTemplate.ts"
