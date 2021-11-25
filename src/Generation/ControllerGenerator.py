@@ -1,4 +1,7 @@
+from ..Tools.JsonHandler import JsonHandler
+from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
+from .TemplatesPaths import CONTROLLER_TEMPLATE_PATH
 
 def getControllerFileName(catName):
     return toCodeCamelCase(catName + ".controller.ts")
@@ -7,3 +10,87 @@ def getControllerFileName(catName):
 def getControllerMiddlewareName(actionName):
     return toCodeCamelCase(actionName)
 
+
+
+class ControllerGenerator:
+    def __init__(self, catName, distPath, srcFileName, jsonFile):
+        self.catName = catName
+        self.distPath = distPath
+        self.srcFileName = srcFileName
+        self.fileName = getControllerFileName(self.catName)
+        self.distFile = self.distPath + self.fileName
+        self.json = jsonFile
+        self.template = genrateFileFromTemplateAndRead(self.distFile, CONTROLLER_TEMPLATE_PATH)
+        print('\nSetup Controller generator\n', self.distFile, "\n")
+
+
+    # def generateDTOStrucFields(self, ret, elemJson):
+    #     ret = ret.replace(DTO_STRUC_FIELDS, readFile(DTO_STRUC_FIELD_TEMPLATE_PATH))
+    #     ret = ret.replace(DTO_STRUC_FIELD_NAME, elemJson.access('name'))
+    #     ret = ret.replace(DTO_STRUC_FIELD_TYPE, elemJson.access('type'))
+    #     return ret
+
+    # def getDTORetrieveValueFromBody(self, elemJson):
+    #     ret = ""
+    #     ret = readFile(DTO_FUNC_RETRIEVE_FROM_BODY_TEMPLATE_PATH)
+    #     ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE_FROM_BODY_NAME, elemJson.access('name'))
+    #     return ret
+
+    # def getDTORetrieveValueFromParams(self, elemJson):
+    #     ret = ""
+    #     ret = readFile(DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH)
+    #     ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE_FROM_PARAMS_NAME, elemJson.access('name'))
+    #     return ret
+
+    # def getDTORetrieveValueFromRaw(self, elemJson):
+    #     if elemJson.access('get.rawImport') not in self.template:
+    #         self.template = self.template.replace(DTO_RAW_IMPORT_PLACEHOLDER, readFile(DTO_RAW_IMPORT_TEMPLATE_PATH))
+    #         self.template = self.template.replace(DTO_RAW_IMPORT_VALUE, elemJson.access('get.rawImport'))
+    #     return elemJson.access('get.rawValue')
+
+    # def getDTORetrieveValue(self, elemJson):
+    #     dataFrom = elemJson.access('get.from')
+    #     types = [["body", self.getDTORetrieveValueFromBody], ["params", self.getDTORetrieveValueFromParams], ["rawLine", self.getDTORetrieveValueFromRaw]]
+    #     for type in types:
+    #         if dataFrom == type[0]:
+    #             return type[1](elemJson)
+    #     return self.getDTORetrieveValueFromBody(elemJson)
+
+    # def generateDTOFuncRetrieves(self, ret, elemJson):
+    #     if elemJson.access('get.from') == "rawBloc":
+    #         ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(self.srcFileName[:-5] + "_" + elemJson.access('name') + ".ts"))
+    #         ret += "\n" + DTO_FUNC_RETRIEVES
+    #     else:
+    #         ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(DTO_FUNC_RETRIEVES_TEMPLATE_PATH))
+    #         ret = ret.replace(DTO_FUNC_RETRIEVE_NAME, elemJson.access('name'))
+    #         ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE, self.getDTORetrieveValue(elemJson))
+    #     return ret
+
+    # def generateDTO(self):
+    #     ret = ""
+    #     ret += readFile(DTO_DUO_TEMPLATE_PATH)
+    #     ret = ret.replace(DTO_STRUC_NAME, getDTOStrucName(self.catName, self.srcFileName[:-5]))
+    #     ret = ret.replace(DTO_FUNC_NAME, getDTOFuncName(self.catName, self.srcFileName[:-5]))
+    #     data = self.json.access('data')
+    #     for elem in data:
+    #         elemJson = JsonHandler(elem)
+    #         ret = self.generateDTOStrucFields(ret, elemJson)
+    #         ret = self.generateDTOFuncRetrieves(ret, elemJson)
+    #     ret = ret.replace(DTO_STRUC_FIELDS, "")
+    #     ret = ret.replace(DTO_FUNC_RETRIEVES, "")
+    #     return ret
+
+    def replaceFlags(self):
+        # generatedDto = self.generateDTO()
+        # if " await " in generatedDto:
+        #     generatedDto.replace(DTO_ASYNC_PLACEHOLDER, readFile())
+        # self.template = self.template.replace(DTO_PLACEHOLDER, generatedDto)
+        return
+
+    def getDistFilePath(self):
+        return self.distFile
+
+    def run(self):
+        print('\nRun Controller generator\n', self.distFile, "\n")
+        self.replaceFlags()
+        writeInFileByPath(self.distFile, self.template)

@@ -52,6 +52,9 @@ VALIDATOR_MIDDLEWARE_TEMPLATE_PATH = "./Templates/Files/Router/Validator/Validat
 VALIDATOR_MIDDLEWARE_RULES_TEMPLATE_PATH = "./Templates/Files/Router/Validator/ValidatorMiddlewareRulesTemplate.ts"
 
 # Controller
+
+CONTROLLER_TEMPLATE_PATH = "./Templates/Files/Router/ControllerTemplate.ts"
+
 # DataFromRequest
 
 DTO_TEMPLATE_PATH = "./Templates/Files/Router/DtoTemplate.ts"

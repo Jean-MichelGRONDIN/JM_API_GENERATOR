@@ -99,5 +99,12 @@ def cleanDTOFile(filePath):
     ]
     cleanFile(filePath, rules)
 
-
+def cleanControllerFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanEndOfImportComma
+    ]
+    cleanFile(filePath, rules)
 
