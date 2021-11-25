@@ -56,16 +56,20 @@ class DTOGenerator:
 
     def getDTORetrieveValue(self, elemJson):
         dataFrom = elemJson.access('get.from')
-        types = [["body", self.getDTORetrieveValueFromBody], ["params", self.getDTORetrieveValueFromParams], ["raw", self.getDTORetrieveValueFromRaw]]
+        types = [["body", self.getDTORetrieveValueFromBody], ["params", self.getDTORetrieveValueFromParams], ["rawLine", self.getDTORetrieveValueFromRaw]]
         for type in types:
             if dataFrom == type[0]:
                 return type[1](elemJson)
         return self.getDTORetrieveValueFromBody(elemJson)
 
     def generateDTOFuncRetrieves(self, ret, elemJson):
-        ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(DTO_FUNC_RETRIEVES_TEMPLATE_PATH))
-        ret = ret.replace(DTO_FUNC_RETRIEVE_NAME, elemJson.access('name'))
-        ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE, self.getDTORetrieveValue(elemJson))
+        if elemJson.access('get.from') == "rawBloc":
+            ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(self.srcFileName[:-5] + "_" + elemJson.access('name') + ".ts"))
+            ret += DTO_FUNC_RETRIEVES
+        else:
+            ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(DTO_FUNC_RETRIEVES_TEMPLATE_PATH))
+            ret = ret.replace(DTO_FUNC_RETRIEVE_NAME, elemJson.access('name'))
+            ret = ret.replace(DTO_FUNC_RETRIEVE_VALUE, self.getDTORetrieveValue(elemJson))
         return ret
 
     def generateDTO(self):
