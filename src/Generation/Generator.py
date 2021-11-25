@@ -49,7 +49,7 @@ class Generator:
 # Controllers (quand le return d'une action c'est une structure stocker dans le fichier action => quand la method c'est get mettre le return type (split '|' [0]) dans l'import)
 # Actions (check d'abord les where puis les actions dans l'ordre ou c'est arriver (input, update, ...))
 
-# DTO (donner la possibilité de mettre un rawFile à la place d'un raw et donc changer de template pour la value et juste mettre le contenu du file)
+# DTO (donner la possibilité de mettre un rawFile à la place d'un raw et donc changer de template pour la value et juste mettre le contenu du file, le nom du file serai "filejsonName+dataName+.ts" action.user_id.ts)
 # DTO si je trouve un await dans le placeholder avant de le return je met un async sur la fonction (ou la promise ?)
 # DTO en promise
 # controller hanlder DTO promise (si dans el fichier conf je dit que data est en promise je change de template pour le Controller)
