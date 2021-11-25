@@ -65,7 +65,7 @@ class DTOGenerator:
     def generateDTOFuncRetrieves(self, ret, elemJson):
         if elemJson.access('get.from') == "rawBloc":
             ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(self.srcFileName[:-5] + "_" + elemJson.access('name') + ".ts"))
-            ret += DTO_FUNC_RETRIEVES
+            ret += "\n" + DTO_FUNC_RETRIEVES
         else:
             ret = ret.replace(DTO_FUNC_RETRIEVES, readFile(DTO_FUNC_RETRIEVES_TEMPLATE_PATH))
             ret = ret.replace(DTO_FUNC_RETRIEVE_NAME, elemJson.access('name'))
