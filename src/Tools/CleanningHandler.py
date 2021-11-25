@@ -104,6 +104,7 @@ def cleanControllerFile(filePath):
         replaceTabsBySpaces,
         cleanTags,
         cleanLongLineReturnChains,
+        cleanMultiplesLineReturnBetweenImports,
         cleanEndOfImportComma
     ]
     cleanFile(filePath, rules)

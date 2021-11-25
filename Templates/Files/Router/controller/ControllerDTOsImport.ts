@@ -1,0 +1,1 @@
+import { $CONTROLLER_DTO_IMPORT_DTO_NAMES$ } from '../dataTransfertObject/$CONTROLLER_DTO_IMPORT_FILE_NAME$';
