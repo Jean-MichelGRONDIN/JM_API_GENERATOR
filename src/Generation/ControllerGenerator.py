@@ -35,7 +35,7 @@ class ControllerGenerator:
         self.template = genrateFileFromTemplateAndRead(self.distFile, CONTROLLER_TEMPLATE_PATH)
         self.method = self.json.access('method')
         self.actionName = getActionName(self.catName, self.srcFileName[:-5])
-        self.actionReturnType = getActionReturnType(self.method, self.srcFileName[:-5], self.catName).split('|')
+        self.actionReturnType = getActionReturnType(self.method, self.srcFileName[:-5], self.json.access('targetTable')).split('|')
         self.DTOFuncName = getDTOFuncName(self.catName, self.srcFileName[:-5])
         self.DTOStrucName = getDTOStrucName(self.catName, self.srcFileName[:-5])
         print('\nSetup Controller generator\n', self.distFile, "\n")

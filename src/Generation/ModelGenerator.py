@@ -6,8 +6,8 @@ from .TemplatesPaths import MODEL_TEMPLATE_PATH, MODEL_FIELD_TEMPLATE_PATH
 def getModelFileNameFromFileName(fileName):
     return toTitleCamelCase(fileName[:-5]) + ".ts"
 
-def getModelFileNameFromCatName(catName):
-    return toTitleCamelCase(catName) + ".ts"
+def getModelFileNameFromTargetTable(targetTable):
+    return toTitleCamelCase(targetTable) + ".ts"
 
 class ModelGenerator:
     def __init__(self, distPath, fileName, jsonFile):
