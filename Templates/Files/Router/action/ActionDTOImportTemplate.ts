@@ -1,0 +1,1 @@
+import { $ACTION_DTO_IMPORT_DTO_NAME$ } from './../dataTransfertObject/$ACTION_DTO_IMPORT_FILE_NAME$';

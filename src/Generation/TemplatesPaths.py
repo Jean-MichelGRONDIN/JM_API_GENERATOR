@@ -94,3 +94,9 @@ DTO_FUNC_RETRIEVE_FROM_PARAMS_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoF
 DTO_RAW_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/DTO/DtoRawImportTemplate.ts"
 
 # Action
+
+ACTION_TEMPLATE_PATH = "./Templates/Files/Router/ActionTemplate.ts"
+
+ACTION_DTO_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDTOImportTemplate.ts"
+
+ACTION_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionModelImportTemplate.ts"

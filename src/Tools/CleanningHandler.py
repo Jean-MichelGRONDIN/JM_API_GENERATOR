@@ -109,3 +109,13 @@ def cleanControllerFile(filePath):
     ]
     cleanFile(filePath, rules)
 
+def cleanActionFile(filePath):
+    rules = [
+        replaceTabsBySpaces,
+        cleanTags,
+        cleanLongLineReturnChains,
+        cleanMultiplesLineReturnBetweenImports,
+        cleanEndOfImportComma
+    ]
+    cleanFile(filePath, rules)
+

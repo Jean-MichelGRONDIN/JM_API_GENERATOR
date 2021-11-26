@@ -1,12 +1,13 @@
 from .RouterGenerator import RouterGenerator
-from .DistPaths import ROUTER_DEST, SANITIZER_DEST, VALIDATOR_DEST, DTO_DEST, CONTROLLER_DEST
+from .DistPaths import ROUTER_DEST, SANITIZER_DEST, VALIDATOR_DEST, DTO_DEST, CONTROLLER_DEST, ACTION_DEST
 from ..Tools.FilesHandler import getDirFolders, getDirFiles, readJsonFile
 from ..Tools.JsonHandler import JsonHandler
-from ..Tools.CleanningHandler import cleanRouterFile, cleanSanitizerFile, cleanValidatorFile, cleanDTOFile, cleanControllerFile
+from ..Tools.CleanningHandler import cleanRouterFile, cleanSanitizerFile, cleanValidatorFile, cleanDTOFile, cleanControllerFile, cleanActionFile
 from .SanitizerGenerator import hasSanitizer, SanitizerGenerator
 from .ValidatorGenerator import hasValidator, ValidatorGenerator
 from .DTOGenerator import DTOGenerator
 from .ControllerGenerator import ControllerGenerator
+from .ActionGenerator import ActionGenerator
 
 class RoutesGenerator:
     def __init__(self, src, dist):
@@ -73,12 +74,23 @@ class RoutesGenerator:
             self.generatedControllers.append(distFilePath)
         return
 
+    def generateAction(self, catName, srcFilePath, srcFileName):
+        destPath = self.generationDest + ACTION_DEST
+        jsonFile = JsonHandler(readJsonFile(srcFilePath))
+        generator = ActionGenerator(catName, destPath, srcFileName, jsonFile)
+        generator.run()
+        distFilePath = generator.getDistFilePath()
+        if distFilePath not in self.generatedActions:
+            self.generatedActions.append(distFilePath)
+        return
+
     def generateRoute(self, catName, srcFilePath, srcFileName):
         self.generateRouter(catName, srcFilePath, srcFileName)
         self.generateSanitizer(catName, srcFilePath, srcFileName)
         self.generateValidator(catName, srcFilePath, srcFileName)
         self.generateDTO(catName, srcFilePath, srcFileName)
         self.generateController(catName, srcFilePath, srcFileName)
+        self.generateAction(catName, srcFilePath, srcFileName)
         return
 
 
@@ -92,6 +104,7 @@ class RoutesGenerator:
         self.cleanFilesListWithRule(self.generatedValidators, cleanValidatorFile)
         self.cleanFilesListWithRule(self.generatedDTOs, cleanDTOFile)
         self.cleanFilesListWithRule(self.generatedControllers, cleanControllerFile)
+        self.cleanFilesListWithRule(self.generatedActions, cleanActionFile)
 
 
     def generate(self):
