@@ -90,7 +90,6 @@ class ControllerGenerator:
 
 
     def replaceFlags(self):
-        print(self.srcFileName)
         self.importDTOs()
         self.importActions()
         self.template = self.template.replace(CONTROLLER_PLACEHOLDER, self.generateControllers())
