@@ -100,3 +100,5 @@ ACTION_TEMPLATE_PATH = "./Templates/Files/Router/ActionTemplate.ts"
 ACTION_DTO_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDTOImportTemplate.ts"
 
 ACTION_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionModelImportTemplate.ts"
+
+ACTION_ACTION_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionModelImportTemplate.ts"
