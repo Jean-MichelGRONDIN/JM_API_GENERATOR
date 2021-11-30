@@ -1,4 +1,4 @@
-export const createActionAction = (data: actionCreateData): Promise<null|ErrorDB> => {
+export const $ACTION_ACTION_NAME$ = (data: $ACTION_DTO_TYPE$): Promise<$ACTION_ACTION_RETURN_TYPE$> => {
     return new Promise(async (resolve, reject) => {
         await knex('actions')
             .insert({
