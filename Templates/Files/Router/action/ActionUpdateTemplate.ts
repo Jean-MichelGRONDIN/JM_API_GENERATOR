@@ -5,7 +5,7 @@ $ACTION_WHERE_FIELDS$
             'deleted_at': null
         })
         .update({
-            title: data.title
+$ACTION_DB_ACTION_FIELDS$
         })
         .catch(function(error: Error) {
             reject(new ErrorDB(error));

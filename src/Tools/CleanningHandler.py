@@ -41,6 +41,10 @@ def cleanInsideObjectLineReturnList(data):
     data = sub(r',[\n]+', ',\n', data)
     return data
 
+def cleanEndOFObjectListCommaForActionDbLines(data):
+    data = sub(r',[\n, ]+}', '\n        }', data)
+    return data
+
 
 def cleanFile(filePath, rules):
     content = readFile(filePath)
@@ -120,7 +124,8 @@ def cleanActionFile(filePath):
         cleanLongLineReturnChains,
         cleanMultiplesLineReturnBetweenImports,
         cleanEndOfImportComma,
-        cleanInsideObjectLineReturnList
+        cleanInsideObjectLineReturnList,
+        cleanEndOFObjectListCommaForActionDbLines
     ]
     cleanFile(filePath, rules)
 
