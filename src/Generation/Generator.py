@@ -21,8 +21,6 @@ class Generator:
 
         tablesGenerator = RoutesGenerator(self.confSrc, self.generationDest)
         tablesGenerator.run()
-        #     # Clear les les virgules seul en fin de list (soir sur la même ligne sous sur plusieurs lignes)
-        #     # replace every \t par 4 espaces
         # except Exception as error:
         #     print("Failling to generate the API\n")
         #     print(error)
