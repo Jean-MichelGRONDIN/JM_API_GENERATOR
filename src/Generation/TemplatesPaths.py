@@ -101,4 +101,12 @@ ACTION_DTO_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDTOImpo
 
 ACTION_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionModelImportTemplate.ts"
 
-ACTION_ACTION_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionModelImportTemplate.ts"
+ACTION_INDEX_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionIndexTemplate.ts"
+
+ACTION_CREATE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionCreateTemplate.ts"
+
+ACTION_UPDATE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionUpdateTemplate.ts"
+
+ACTION_SHOW_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionShowTemplate.ts"
+
+ACTION_DESTROY_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDestroyTemplate.ts"

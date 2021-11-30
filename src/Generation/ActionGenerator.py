@@ -1,7 +1,8 @@
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import ACTION_TEMPLATE_PATH, ACTION_DTO_IMPORT_TEMPLATE_PATH, ACTION_MODEL_IMPORT_TEMPLATE_PATH, ACTION_ACTION_TEMPLATE_PATH
+from .TemplatesPaths import ACTION_TEMPLATE_PATH, ACTION_DTO_IMPORT_TEMPLATE_PATH, ACTION_MODEL_IMPORT_TEMPLATE_PATH
+from .TemplatesPaths import ACTION_INDEX_TEMPLATE_PATH, ACTION_CREATE_TEMPLATE_PATH, ACTION_UPDATE_TEMPLATE_PATH, ACTION_SHOW_TEMPLATE_PATH, ACTION_DESTROY_TEMPLATE_PATH
 from .Flags import ACTION_DTO_IMPORTS, ACTION_DTO_IMPORT_FILE_NAME, ACTION_DTO_IMPORT_DTO_NAME, ACTION_PLACEHOLDER
 from .Flags import ACTION_MODEL_IMPORTS, ACTION_MODEL_IMPORT_FILE_NAME, ACTION_MODEL_IMPORT_MODEL_NAME
 from .DTOGenerator import getDTOFileName, getDTOStrucName
@@ -59,7 +60,7 @@ class ActionGenerator:
 
     def generateActions(self):
         ret = ""
-        ret += readFile(ACTION_ACTION_TEMPLATE_PATH)
+        ret += readFile(ACTION_CREATE_TEMPLATE_PATH)
         return ret
 
 
