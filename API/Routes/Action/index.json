@@ -21,7 +21,6 @@
                 "rule": ""
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "workspace_id",
                 "asWhere": true,
                 "asAction": false

@@ -110,3 +110,5 @@ ACTION_UPDATE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionUpdateTempl
 ACTION_SHOW_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionShowTemplate.ts"
 
 ACTION_DESTROY_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDestroyTemplate.ts"
+
+ACTION_WHERE_LINE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionWhereLineTemplate.ts"

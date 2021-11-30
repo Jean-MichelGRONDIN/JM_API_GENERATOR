@@ -21,7 +21,6 @@
                 "rule": ""
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "creator_id",
                 "asWhere": false,
                 "asAction": true
@@ -44,7 +43,6 @@
                 "rule": "required"
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "workspace_id",
                 "asWhere": false,
                 "asAction": true
@@ -67,7 +65,6 @@
                 "rule": "required|string|max:255"
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "title",
                 "asWhere": false,
                 "asAction": true

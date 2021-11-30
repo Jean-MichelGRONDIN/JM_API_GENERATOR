@@ -3,9 +3,11 @@ from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTem
 from ..Tools.CaseHandler import toCodeCamelCase
 from .TemplatesPaths import ACTION_TEMPLATE_PATH, ACTION_DTO_IMPORT_TEMPLATE_PATH, ACTION_MODEL_IMPORT_TEMPLATE_PATH
 from .TemplatesPaths import ACTION_INDEX_TEMPLATE_PATH, ACTION_CREATE_TEMPLATE_PATH, ACTION_UPDATE_TEMPLATE_PATH, ACTION_SHOW_TEMPLATE_PATH, ACTION_DESTROY_TEMPLATE_PATH
+from .TemplatesPaths import ACTION_WHERE_LINE_TEMPLATE_PATH
 from .Flags import ACTION_DTO_IMPORTS, ACTION_DTO_IMPORT_FILE_NAME, ACTION_DTO_IMPORT_DTO_NAME, ACTION_PLACEHOLDER
 from .Flags import ACTION_MODEL_IMPORTS, ACTION_MODEL_IMPORT_FILE_NAME, ACTION_MODEL_IMPORT_MODEL_NAME
-from .Flags import ACTION_ACTION_NAME, ACTION_ACTION_RETURN_TYPE, ACTION_DTO_TYPE, ACTION_MODEL_NAME, ACTION_CUSTOM_RET_TYPE
+from .Flags import ACTION_ACTION_NAME, ACTION_ACTION_RETURN_TYPE, ACTION_TABLE_NAME, ACTION_DTO_TYPE, ACTION_MODEL_NAME, ACTION_CUSTOM_RET_TYPE
+from .Flags import ACTION_WHERE_FIELDS, ACTION_WHERE_LINE_TARGET_NAME, ACTION_WHERE_LINE_VALUE
 from .DTOGenerator import getDTOFileName, getDTOStrucName
 from .ModelGenerator import getModelFileNameFromTargetTable
 
@@ -59,44 +61,59 @@ class ActionGenerator:
         return ret
 
 
-    def replaceCommonActionFlags(self, str):
+    def generateWhereLine(self, elemJson):
+        ret = ""
+        ret += readFile(ACTION_WHERE_LINE_TEMPLATE_PATH)
+        ret = ret.replace(ACTION_WHERE_LINE_TARGET_NAME, elemJson.access('correspondToField.field'))
+        ret = ret.replace(ACTION_WHERE_LINE_VALUE, elemJson.access('name'))
+        return ret
+
+    def generateActionWhereClauses(self):
+        ret = ""
+        for elem in self.json.access('data'):
+            elemJson = JsonHandler(elem)
+            if elemJson.access('correspondToField.asWhere'):
+                ret += self.generateWhereLine(elemJson)
+        return ret
+
+    def replaceActionFlags(self, str):
         str = str.replace(ACTION_ACTION_NAME, self.actionName)
         str = str.replace(ACTION_ACTION_RETURN_TYPE, "|".join(self.actionReturnType))
+        str = str.replace(ACTION_TABLE_NAME, self.json.access('targetTable'))
         str = str.replace(ACTION_DTO_TYPE, self.DTOStrucName)
+        str = str.replace(ACTION_CUSTOM_RET_TYPE, self.actionReturnType[0])
+        str = str.replace(ACTION_MODEL_NAME, self.modelFileName[:-3])
+        str = str.replace(ACTION_WHERE_FIELDS, self.generateActionWhereClauses())
         return str
 
     def generateIndex(self):
         ret = ""
         ret += readFile(ACTION_INDEX_TEMPLATE_PATH)
-        ret = self.replaceCommonActionFlags(ret)
-        ret = ret.replace("", "")
-        ret = ret.replace(ACTION_CUSTOM_RET_TYPE, self.actionReturnType[0])
-        ret = ret.replace(ACTION_MODEL_NAME, self.modelFileName[:-3])
+        ret = self.replaceActionFlags(ret)
         return ret
 
     def generateShow(self):
         ret = ""
         ret += readFile(ACTION_SHOW_TEMPLATE_PATH)
-        ret = self.replaceCommonActionFlags(ret)
-        ret = ret.replace(ACTION_MODEL_NAME, self.modelFileName[:-3])
+        ret = self.replaceActionFlags(ret)
         return ret
 
     def generateCreate(self):
         ret = ""
         ret += readFile(ACTION_CREATE_TEMPLATE_PATH)
-        ret = self.replaceCommonActionFlags(ret)
+        ret = self.replaceActionFlags(ret)
         return ret
 
     def generateUpdate(self):
         ret = ""
         ret += readFile(ACTION_UPDATE_TEMPLATE_PATH)
-        ret = self.replaceCommonActionFlags(ret)
+        ret = self.replaceActionFlags(ret)
         return ret
 
     def generateDestroy(self):
         ret = ""
         ret += readFile(ACTION_DESTROY_TEMPLATE_PATH)
-        ret = self.replaceCommonActionFlags(ret)
+        ret = self.replaceActionFlags(ret)
         return ret
 
     def generateActions(self):

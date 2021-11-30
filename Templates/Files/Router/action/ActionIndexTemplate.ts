@@ -5,8 +5,8 @@ export interface $ACTION_CUSTOM_RET_TYPE$ {
 
 export const $ACTION_ACTION_NAME$ = (data: $ACTION_DTO_TYPE$): Promise<$ACTION_ACTION_RETURN_TYPE$> => {
     return new Promise((resolve, reject) => {
-        knex.select("*").from("actions").where({
-            'workspace_id': data.workspace_id,
+        knex.select("*").from("$ACTION_TABLE_NAME$").where({
+$ACTION_WHERE_FIELDS$
             'deleted_at': null
         })
         .then((res) => {

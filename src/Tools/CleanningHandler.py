@@ -37,6 +37,10 @@ def cleanEndOFObjectListCommaForDTO(data):
     data = sub(r',[\n, ]+}', '\n}', data)
     return data
 
+def cleanInsideObjectLineReturnList(data):
+    data = sub(r',[\n]+', ',\n', data)
+    return data
+
 
 def cleanFile(filePath, rules):
     content = readFile(filePath)
@@ -115,7 +119,8 @@ def cleanActionFile(filePath):
         cleanTags,
         cleanLongLineReturnChains,
         cleanMultiplesLineReturnBetweenImports,
-        cleanEndOfImportComma
+        cleanEndOfImportComma,
+        cleanInsideObjectLineReturnList
     ]
     cleanFile(filePath, rules)
 

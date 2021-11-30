@@ -21,7 +21,6 @@
                 "rule": ""
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "id",
                 "asWhere": true,
                 "asAction": false
@@ -44,7 +43,6 @@
                 "rule": ""
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "creator_id",
                 "asWhere": true,
                 "asAction": false

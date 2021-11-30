@@ -21,7 +21,6 @@
                 "rule": ""
             },
             "correspondToField": {
-                "hasTarget": true,
                 "field": "id",
                 "asWhere": true,
                 "asAction": false
