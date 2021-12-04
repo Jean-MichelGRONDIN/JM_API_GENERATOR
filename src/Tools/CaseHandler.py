@@ -16,3 +16,7 @@ def toCodeCamelCase(text):
     titleCamelCase = toTitleCamelCase(text)
     return firstLetterToLowerCase(titleCamelCase)
 
+def toSingular(text):
+    if text[-2:] != "ss" and text[-1:] == "s":
+        return text[:-1]
+    return text

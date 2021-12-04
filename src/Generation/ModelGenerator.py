@@ -1,18 +1,22 @@
 from .Flags import MODEL_NAME, MODEL_FIELDS, MODEL_FIELD_NAME, MODEL_FIELD_TYPE
 from ..Tools.FilesHandler import readFile, writeInFileByPath
-from ..Tools.CaseHandler import toTitleCamelCase
+from ..Tools.CaseHandler import toTitleCamelCase, toSingular
 from .TemplatesPaths import MODEL_TEMPLATE_PATH, MODEL_FIELD_TEMPLATE_PATH
 
 def getModelFileNameFromFileName(fileName):
-    return toTitleCamelCase(fileName[:-5]) + ".ts"
+    return toTitleCamelCase(toSingular(fileName[:-5])) + "Model.ts"
 
 def getModelFileNameFromTargetTable(targetTable):
-    return toTitleCamelCase(targetTable) + ".ts"
+    return toTitleCamelCase(toSingular(targetTable) + "Model.ts")
+
+def getModelStrucNameFromTargetTable(targetTable):
+    return getModelFileNameFromTargetTable(toSingular(targetTable))[:-8]
 
 class ModelGenerator:
     def __init__(self, distPath, fileName, jsonFile):
         self.distPath = distPath
         self.fileName = getModelFileNameFromFileName(fileName)
+        self.modelName = self.fileName[:-8]
         self.distFile = self.distPath + "/" + self.fileName
         self.json = jsonFile
         self.template = readFile(MODEL_TEMPLATE_PATH)
@@ -35,7 +39,7 @@ class ModelGenerator:
 
 
     def replaceFlags(self):
-        self.template = self.template.replace(MODEL_NAME, self.fileName[:-3])
+        self.template = self.template.replace(MODEL_NAME, self.modelName)
         self.template = self.template.replace(MODEL_FIELDS, self.printFields())
 
     def getDistFilePath(self):

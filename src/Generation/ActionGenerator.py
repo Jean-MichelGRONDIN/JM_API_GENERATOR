@@ -10,7 +10,7 @@ from .Flags import ACTION_ACTION_NAME, ACTION_ACTION_RETURN_TYPE, ACTION_TABLE_N
 from .Flags import ACTION_WHERE_FIELDS, ACTION_WHERE_LINE_TARGET_NAME, ACTION_WHERE_LINE_VALUE, ACTION_DB_ACTION_FIELDS
 from .Flags import ACTION_DB_ACTION_LINE_TARGET_NAME, ACTION_DB_ACTION_LINE_VALUE
 from .DTOGenerator import getDTOFileName, getDTOStrucName
-from .ModelGenerator import getModelFileNameFromTargetTable
+from .ModelGenerator import getModelFileNameFromTargetTable, getModelStrucNameFromTargetTable
 
 def getActionFileName(catName):
     return toCodeCamelCase(catName + "Action.ts")
@@ -22,7 +22,7 @@ def getActionReturnType(method, fileName, targetTable):
     if method.lower() == "get" and fileName.lower() == "index":
         return getActionName(targetTable, fileName) + "Ret|ErrorDB"
     if method.lower() == "get" and fileName.lower() == "show":
-        return getModelFileNameFromTargetTable(targetTable)[:-3] + "|ErrorDB"
+        return getModelStrucNameFromTargetTable(targetTable) + "|ErrorDB"
     return "null|ErrorDB"
 
 
@@ -40,7 +40,8 @@ class ActionGenerator:
         self.actionName = getActionName(self.catName, self.srcFileName[:-5])
         self.actionReturnType = getActionReturnType(self.method, self.srcFileName[:-5], self.json.access('targetTable')).split('|')
         self.DTOStrucName = getDTOStrucName(self.catName, self.srcFileName[:-5])
-        self.modelFileName = getModelFileNameFromTargetTable(self.json.access('targetTable'))
+        self.modelFileName = getModelFileNameFromTargetTable(self.json.access('targetTable'))[:-3]
+        self.modelStrucName = getModelStrucNameFromTargetTable(self.json.access('targetTable'))
         print('\nSetup Action generator\n', self.distFile, "\n")
 
 
@@ -56,7 +57,7 @@ class ActionGenerator:
         if self.method.lower() == "get":
             bloc = readFile(ACTION_MODEL_IMPORT_TEMPLATE_PATH)
             bloc = ret.replace(ACTION_MODEL_IMPORT_FILE_NAME, self.modelFileName)
-            bloc = ret.replace(ACTION_MODEL_IMPORT_MODEL_NAME, self.modelFileName[:-3])
+            bloc = ret.replace(ACTION_MODEL_IMPORT_MODEL_NAME, self.modelStrucName)
             if bloc not in self.template:
                 ret = bloc
         return ret
@@ -98,7 +99,7 @@ class ActionGenerator:
         str = str.replace(ACTION_TABLE_NAME, self.json.access('targetTable'))
         str = str.replace(ACTION_DTO_TYPE, self.DTOStrucName)
         str = str.replace(ACTION_CUSTOM_RET_TYPE, self.actionReturnType[0])
-        str = str.replace(ACTION_MODEL_NAME, self.modelFileName[:-3])
+        str = str.replace(ACTION_MODEL_NAME, self.modelStrucName)
         str = str.replace(ACTION_WHERE_FIELDS, self.generateActionWhereClauses())
         str = str.replace(ACTION_DB_ACTION_FIELDS, self.generateActionDBActionClauses())
         return str
