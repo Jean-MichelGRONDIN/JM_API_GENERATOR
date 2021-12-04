@@ -8,7 +8,7 @@ class MigrationGenerator:
     def __init__(self, distPath, fileName, tableFiles):
         self.distPath = distPath
         now = datetime.now()
-        self.fileName = now.strftime("%Y%m%d_create_") + fileName + "_tables.ts"
+        self.fileName = now.strftime("%Y%m%d%H%M%S_create_") + fileName + "_tables.ts"
         self.distFile = self.distPath + "/" + self.fileName + ".ts"
         self.files = tableFiles
         # self.revList = sorted(tableFiles, key=lambda elem: elem[0], reverse=True)
