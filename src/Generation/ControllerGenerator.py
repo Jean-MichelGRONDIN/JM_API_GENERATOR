@@ -14,6 +14,7 @@ from .Flags import CONTROLLER_CONTROLLER_ACTION_NAME, CONTROLLER_CONTROLLER_ACTI
 from .Flags import CONTROLLER_CONTROLLER_DB_ERROR_RES, CONTROLLER_CONTROLLER_DTO_ERROR_RES
 from .DTOGenerator import getDTOFileName, getDTOStrucName, getDTOFuncName
 from .ActionGenerator import getActionFileName, getActionName, getActionReturnType
+from .ModelGenerator import getModelFileNameFromTargetTable
 
 def getControllerFileName(catName):
     return toCodeCamelCase(catName + ".controller.ts")
@@ -38,6 +39,7 @@ class ControllerGenerator:
         self.actionReturnType = getActionReturnType(self.method, self.srcFileName[:-5], self.json.access('targetTable')).split('|')
         self.DTOFuncName = getDTOFuncName(self.catName, self.srcFileName[:-5])
         self.DTOStrucName = getDTOStrucName(self.catName, self.srcFileName[:-5])
+        self.modelFileName = getModelFileNameFromTargetTable(self.json.access('targetTable'))[:-3]
         print('\nSetup Controller generator\n', self.distFile, "\n")
 
 
@@ -57,7 +59,7 @@ class ControllerGenerator:
             importsBloc += ", " + self.actionReturnType[0]
         if self.method.lower() == "get" and fileName.lower() == "show":
             self.template = self.template.replace(CONTROLLER_MODEL_IMPORTS, readFile(CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH))
-            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_FILE_NAME, self.actionReturnType[0])
+            self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_FILE_NAME, self.modelFileName)
             self.template = self.template.replace(CONTROLLER_MODEL_IMPORT_MODEL_NAME, self.actionReturnType[0])
         self.template = self.template.replace(CONTROLLER_ACTION_IMPORT_ACTION_NAMES, importsBloc + ", " + CONTROLLER_ACTION_IMPORT_ACTION_NAMES)
 
