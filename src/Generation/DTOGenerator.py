@@ -22,6 +22,10 @@ def doesNeedDTO(jsonFile):
         return True
     return False
 
+def getDTOVarName(catName, actionName):
+    return "data";
+
+
 class DTOGenerator:
     def __init__(self, catName, distPath, srcFileName, jsonFile):
         self.catName = catName

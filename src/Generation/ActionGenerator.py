@@ -9,7 +9,7 @@ from .Flags import ACTION_MODEL_IMPORTS, ACTION_MODEL_IMPORT_FILE_NAME, ACTION_M
 from .Flags import ACTION_ACTION_NAME, ACTION_ACTION_RETURN_TYPE, ACTION_TABLE_NAME, ACTION_DTO_TYPE, ACTION_MODEL_NAME, ACTION_CUSTOM_RET_TYPE
 from .Flags import ACTION_WHERE_FIELDS, ACTION_WHERE_LINE_TARGET_NAME, ACTION_WHERE_LINE_VALUE, ACTION_DB_ACTION_FIELDS
 from .Flags import ACTION_DB_ACTION_LINE_TARGET_NAME, ACTION_DB_ACTION_LINE_VALUE
-from .DTOGenerator import getDTOFileName, getDTOStrucName
+from .DTOGenerator import doesNeedDTO, getDTOFileName, getDTOStrucName
 from .ModelGenerator import getModelFileNameFromTargetTable, getModelStrucNameFromTargetTable
 
 def getActionFileName(catName):
@@ -151,7 +151,8 @@ class ActionGenerator:
 
     def replaceFlags(self):
         self.template = self.template.replace(ACTION_MODEL_IMPORTS, self.importModels())
-        self.importDTOs()
+        if doesNeedDTO(self.json):
+            self.importDTOs()
         self.template = self.template.replace(ACTION_PLACEHOLDER, self.generateActions())
         return
 
