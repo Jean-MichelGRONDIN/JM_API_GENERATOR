@@ -3,7 +3,7 @@ export interface $ACTION_CUSTOM_RET_TYPE$ {
     count: number,
 }
 
-export const $ACTION_ACTION_NAME$ = (data: $ACTION_DTO_TYPE$): Promise<$ACTION_ACTION_RETURN_TYPE$> => {
+export const $ACTION_ACTION_NAME$ = ($ACTION_DTO_CALL_BLOCK_PLACE$): Promise<$ACTION_ACTION_RETURN_TYPE$> => {
     return new Promise((resolve, reject) => {
         knex.select("*").from("$ACTION_TABLE_NAME$").where({
 $ACTION_WHERE_FIELDS$

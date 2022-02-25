@@ -120,3 +120,5 @@ ACTION_DESTROY_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDestroyTem
 ACTION_WHERE_LINE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionWhereLineTemplate.ts"
 
 ACTION_DB_ACTION_LINE_TEMPLATE_PATH = "./Templates/Files/Router/action/ActionDbActionLineTemplate.ts"
+
+ACTION_DTO_CALL_BLOCK_PATH = "./Templates/Files/Router/action/ActionDTOCallBlockTemplate.ts"

@@ -1,15 +1,15 @@
 from ..Tools.JsonHandler import JsonHandler
 from ..Tools.FilesHandler import readFile, writeInFileByPath, genrateFileFromTemplateAndRead
 from ..Tools.CaseHandler import toCodeCamelCase
-from .TemplatesPaths import ACTION_TEMPLATE_PATH, ACTION_DTO_IMPORT_TEMPLATE_PATH, ACTION_MODEL_IMPORT_TEMPLATE_PATH
+from .TemplatesPaths import ACTION_DTO_CALL_BLOCK_PATH, ACTION_TEMPLATE_PATH, ACTION_DTO_IMPORT_TEMPLATE_PATH, ACTION_MODEL_IMPORT_TEMPLATE_PATH
 from .TemplatesPaths import ACTION_INDEX_TEMPLATE_PATH, ACTION_CREATE_TEMPLATE_PATH, ACTION_UPDATE_TEMPLATE_PATH, ACTION_SHOW_TEMPLATE_PATH, ACTION_DESTROY_TEMPLATE_PATH
 from .TemplatesPaths import ACTION_WHERE_LINE_TEMPLATE_PATH, ACTION_DB_ACTION_LINE_TEMPLATE_PATH
-from .Flags import ACTION_DTO_IMPORTS, ACTION_DTO_IMPORT_FILE_NAME, ACTION_DTO_IMPORT_DTO_NAME, ACTION_PLACEHOLDER
+from .Flags import ACTION_DTO_CALL_BLOCK_PLACE, ACTION_DTO_CALL_VAR_NAME, ACTION_DTO_IMPORTS, ACTION_DTO_IMPORT_FILE_NAME, ACTION_DTO_IMPORT_DTO_NAME, ACTION_PLACEHOLDER
 from .Flags import ACTION_MODEL_IMPORTS, ACTION_MODEL_IMPORT_FILE_NAME, ACTION_MODEL_IMPORT_MODEL_NAME
 from .Flags import ACTION_ACTION_NAME, ACTION_ACTION_RETURN_TYPE, ACTION_TABLE_NAME, ACTION_DTO_TYPE, ACTION_MODEL_NAME, ACTION_CUSTOM_RET_TYPE
 from .Flags import ACTION_WHERE_FIELDS, ACTION_WHERE_LINE_TARGET_NAME, ACTION_WHERE_LINE_VALUE, ACTION_DB_ACTION_FIELDS
 from .Flags import ACTION_DB_ACTION_LINE_TARGET_NAME, ACTION_DB_ACTION_LINE_VALUE
-from .DTOGenerator import doesNeedDTO, getDTOFileName, getDTOStrucName
+from .DTOGenerator import doesNeedDTO, getDTOFileName, getDTOStrucName, getDTOVarName
 from .ModelGenerator import getModelFileNameFromTargetTable, getModelStrucNameFromTargetTable
 
 def getActionFileName(catName):
@@ -97,6 +97,9 @@ class ActionGenerator:
         str = str.replace(ACTION_ACTION_NAME, self.actionName)
         str = str.replace(ACTION_ACTION_RETURN_TYPE, "|".join(self.actionReturnType))
         str = str.replace(ACTION_TABLE_NAME, self.json.access('targetTable'))
+        if doesNeedDTO(self.json):
+            str = str.replace(ACTION_DTO_CALL_BLOCK_PLACE, readFile(ACTION_DTO_CALL_BLOCK_PATH))
+            str = str.replace(ACTION_DTO_CALL_VAR_NAME, getDTOVarName(self.catName, self.srcFileName[:-5]))
         str = str.replace(ACTION_DTO_TYPE, self.DTOStrucName)
         str = str.replace(ACTION_CUSTOM_RET_TYPE, self.actionReturnType[0])
         str = str.replace(ACTION_MODEL_NAME, self.modelStrucName)
