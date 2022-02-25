@@ -53,13 +53,15 @@ class ActionGenerator:
 
 
     def importModels(self):
-        ret = ""
+        ret = ACTION_MODEL_IMPORTS
         if self.method.lower() == "get":
-            bloc = readFile(ACTION_MODEL_IMPORT_TEMPLATE_PATH)
-            bloc = ret.replace(ACTION_MODEL_IMPORT_FILE_NAME, self.modelFileName)
-            bloc = ret.replace(ACTION_MODEL_IMPORT_MODEL_NAME, self.modelStrucName)
-            if bloc not in self.template:
-                ret = bloc
+            print("Need to import the models")
+            ret = readFile(ACTION_MODEL_IMPORT_TEMPLATE_PATH)
+            ret = ret.replace(ACTION_MODEL_IMPORT_FILE_NAME, self.modelFileName)
+            ret = ret.replace(ACTION_MODEL_IMPORT_MODEL_NAME, self.modelStrucName)
+            if ret in self.template:
+                print("Models already here")
+                ret = ACTION_MODEL_IMPORTS
         return ret
 
 
