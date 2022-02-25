@@ -97,7 +97,6 @@ class DTOGenerator:
         if " await " in generatedDto:
             generatedDto.replace(DTO_ASYNC_PLACEHOLDER, readFile(DTO_ASYNC_TEMPLATE_PATH))
         self.template = self.template.replace(DTO_PLACEHOLDER, generatedDto)
-        print("Aprés generation du DTO: ", self.template)
 
     def getDistFilePath(self):
         return self.distFile

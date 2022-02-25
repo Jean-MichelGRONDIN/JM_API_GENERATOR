@@ -1,4 +1,4 @@
-export let $CONTROLLER_CONTROLLER_NAME$ = (req: Request, res: Response) => {
+export let $CONTROLLER_CONTROLLER_NAME$ = $DTO_ASYNC_PLACEHOLDER$(req: Request, res: Response) => {
     $CONTROLLER_CONTROLLER_DTO_FUNC_NAME$(req)
     .then((data: $CONTROLLER_CONTROLLER_DTO_STRUC_NAME$) => {
         $CONTROLLER_CONTROLLER_ACTION_NAME$(data).then((resDB: $CONTROLLER_CONTROLLER_ACTION_RET_TYPE$) => {
