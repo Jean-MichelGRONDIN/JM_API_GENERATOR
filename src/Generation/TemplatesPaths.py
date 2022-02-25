@@ -67,6 +67,8 @@ CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/controller/Con
 
 CONTROLLER_CONTROLLER_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerControllerTemplate.ts"
 
+CONTROLLER_CONTROLLER_DTO_BLOCK_PATH = "./Templates/Files/Router/controller/ControllerDTOBlock.ts"
+
 CONTROLLER_CONTROLLER_DB_ERROR_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerDbErrorRes.ts"
 
 CONTROLLER_CONTROLLER_DTO_ERROR_RES_TEMPLATE_PATH = "./Templates/Files/Router/controller/ControllerRes/ControllerDTOErrorRes.ts"
