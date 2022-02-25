@@ -8,7 +8,7 @@ $ACTION_WHERE_FIELDS$
 $ACTION_DB_ACTION_FIELDS$
         })
         .catch(function(error: Error) {
-            reject(new ErrorDB(error));
+            resolve(new ErrorDB(error));
         });
         resolve(null);
     });

@@ -5,7 +5,7 @@ $ACTION_WHERE_FIELDS$
             'deleted_at': null
         }).first();
         if (res == undefined){
-            reject(newErrorDB("Action id not found"));
+            resolve(newErrorDB("Action id not found"));
         } else {
             resolve(res);
         }

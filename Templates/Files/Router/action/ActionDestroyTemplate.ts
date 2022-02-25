@@ -8,7 +8,7 @@ $ACTION_WHERE_FIELDS$
             deleted_at: knex.fn.now()
         })
         .catch(function(error: Error) {
-            reject(new ErrorDB(error));
+            resolve(new ErrorDB(error));
         });
         resolve(null);
     });

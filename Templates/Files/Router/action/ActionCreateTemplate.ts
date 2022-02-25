@@ -4,7 +4,7 @@ export const $ACTION_ACTION_NAME$ = (data: $ACTION_DTO_TYPE$): Promise<$ACTION_A
 $ACTION_DB_ACTION_FIELDS$
         })
         .catch(function(error: Error) {
-            reject(new ErrorDB(error));
+            resolve(new ErrorDB(error));
         });
         resolve(null);
     });

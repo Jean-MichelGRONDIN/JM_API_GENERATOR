@@ -13,7 +13,7 @@ $ACTION_WHERE_FIELDS$
             const tab: $ACTION_MODEL_NAME$[] = Array.from(res, (value, _) => value as $ACTION_MODEL_NAME$);
             resolve({action_list: tab, count: tab.length} as $ACTION_CUSTOM_RET_TYPE$);
         }).catch(function(error: Error) {
-            reject(new ErrorDB(error));
+            resolve(new ErrorDB(error));
         });
     });
 }
