@@ -12,7 +12,7 @@ from .Flags import CONTROLLER_MODEL_IMPORT_MODEL_NAME, CONTROLLER_MODEL_IMPORT_F
 from .Flags import CONTROLLER_CONTROLLER_NAME, CONTROLLER_CONTROLLER_DTO_FUNC_NAME, CONTROLLER_CONTROLLER_DTO_STRUC_NAME
 from .Flags import CONTROLLER_CONTROLLER_ACTION_NAME, CONTROLLER_CONTROLLER_ACTION_RET_TYPE, CONTROLLER_CONTROLLER_SUCESS_RES
 from .Flags import CONTROLLER_CONTROLLER_DB_ERROR_RES, CONTROLLER_CONTROLLER_DTO_ERROR_RES
-from .DTOGenerator import getDTOFileName, getDTOStrucName, getDTOFuncName
+from .DTOGenerator import doesNeedDTO, getDTOFileName, getDTOStrucName, getDTOFuncName
 from .ActionGenerator import getActionFileName, getActionName, getActionReturnType
 from .ModelGenerator import getModelFileNameFromTargetTable
 
@@ -94,7 +94,8 @@ class ControllerGenerator:
 
 
     def replaceFlags(self):
-        self.importDTOs()
+        if doesNeedDTO(self.json):
+            self.importDTOs()
         self.importActions()
         generatedController = self.generateControllers()
         if " await " in generatedController:
