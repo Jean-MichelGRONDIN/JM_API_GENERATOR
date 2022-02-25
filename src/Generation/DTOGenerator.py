@@ -17,6 +17,10 @@ def getDTOStrucName(catName, actionName):
 def getDTOFuncName(catName, actionName):
     return getDTOStrucName(catName, actionName) + "FromRequest"
 
+def doesNeedDTO(jsonFile):
+    if len(jsonFile.access('data')) > 0:
+        return True
+    return False
 
 class DTOGenerator:
     def __init__(self, catName, distPath, srcFileName, jsonFile):
@@ -91,13 +95,16 @@ class DTOGenerator:
     def replaceFlags(self):
         generatedDto = self.generateDTO()
         if " await " in generatedDto:
-            generatedDto.replace(DTO_ASYNC_PLACEHOLDER, readFile())
+            generatedDto.replace(DTO_ASYNC_PLACEHOLDER, readFile(DTO_ASYNC_TEMPLATE_PATH))
         self.template = self.template.replace(DTO_PLACEHOLDER, generatedDto)
 
     def getDistFilePath(self):
         return self.distFile
 
     def run(self):
-        print('\nRun DTO generator\n', self.distFile, "\n")
-        self.replaceFlags()
-        writeInFileByPath(self.distFile, self.template)
+        if doesNeedDTO(self.json):
+            print('\nRun DTO generator\n', self.distFile, "\n")
+            self.replaceFlags()
+            writeInFileByPath(self.distFile, self.template)
+        else:
+            print('\nNo DTO to generate\n', self.distFile, "\n")

@@ -23,7 +23,9 @@ def getControllerFileName(catName):
 def getControllerMiddlewareName(actionName):
     return toCodeCamelCase(actionName)
 
-
+# check si besoin d'un DTO sinon pas en mettre un
+# passer le controller en async si y'as un await dedans
+# checher le controller pour plus avoir de then ou catch et passer plus à une function normal
 
 class ControllerGenerator:
     def __init__(self, catName, distPath, srcFileName, jsonFile):
