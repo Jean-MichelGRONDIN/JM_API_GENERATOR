@@ -19,8 +19,8 @@ class Generator:
         tablesGenerator = TablesGenerator(self.confSrc, self.generationDest)
         tablesGenerator.run()
 
-        tablesGenerator = RoutesGenerator(self.confSrc, self.generationDest)
-        tablesGenerator.run()
+        routesGenerator = RoutesGenerator(self.confSrc, self.generationDest)
+        routesGenerator.run()
         # except Exception as error:
         #     print("Failling to generate the API\n")
         #     print(error)

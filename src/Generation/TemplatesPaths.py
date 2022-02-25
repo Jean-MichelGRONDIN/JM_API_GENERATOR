@@ -27,6 +27,10 @@ ROUTER_SANITIZER_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterS
 
 ROUTER_VALIDATOR_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterValidatorImportTemplate.ts"
 
+ROUTER_SANITIZER_CALL_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterSanitizerCallTemplate.ts"
+
+ROUTER_VALIDATOR_CALL_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterValidatorCallTemplate.ts"
+
 ROUTER_CONTROLLER_IMPORT_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterControllerImportTemplate.ts"
 
 ROUTER_ROUTE_TEMPLATE_PATH = "./Templates/Files/Router/Router/RouterRouteTemplate.ts"
