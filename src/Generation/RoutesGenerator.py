@@ -5,7 +5,7 @@ from ..Tools.JsonHandler import JsonHandler
 from ..Tools.CleanningHandler import cleanRouterFile, cleanSanitizerFile, cleanValidatorFile, cleanDTOFile, cleanControllerFile, cleanActionFile
 from .SanitizerGenerator import hasSanitizer, SanitizerGenerator
 from .ValidatorGenerator import hasValidator, ValidatorGenerator
-from .DTOGenerator import DTOGenerator
+from .DTOGenerator import DTOGenerator, doesNeedDTO
 from .ControllerGenerator import ControllerGenerator
 from .ActionGenerator import ActionGenerator
 
@@ -56,7 +56,7 @@ class RoutesGenerator:
     def generateDTO(self, catName, srcFilePath, srcFileName):
         destPath = self.generationDest + DTO_DEST
         jsonFile = JsonHandler(readJsonFile(srcFilePath))
-        if hasValidator(jsonFile):
+        if doesNeedDTO(jsonFile):
             generator = DTOGenerator(catName, destPath, srcFileName, jsonFile)
             generator.run()
             distFilePath = generator.getDistFilePath()
