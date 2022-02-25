@@ -98,7 +98,7 @@ class ControllerGenerator:
         self.importActions()
         generatedController = self.generateControllers()
         if " await " in generatedController:
-            generatedController.replace(DTO_ASYNC_PLACEHOLDER, readFile(DTO_ASYNC_TEMPLATE_PATH))
+            generatedController = generatedController.replace(DTO_ASYNC_PLACEHOLDER, readFile(DTO_ASYNC_TEMPLATE_PATH))
         self.template = self.template.replace(CONTROLLER_PLACEHOLDER, generatedController)
         return
 

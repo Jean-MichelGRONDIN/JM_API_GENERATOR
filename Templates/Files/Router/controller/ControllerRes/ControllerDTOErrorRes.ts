@@ -1,1 +1,1 @@
-res.status(400).json({ status: 400, message: `Bad request ${error.message}`, data: {} })
+res.status(400).json({ status: 400, message: `Bad request ${data.message}`, data: {} })
