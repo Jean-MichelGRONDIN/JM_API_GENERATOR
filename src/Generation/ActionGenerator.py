@@ -23,6 +23,8 @@ def getActionReturnType(method, fileName, targetTable):
         return getActionName(targetTable, fileName) + "Ret|ErrorDB"
     if method.lower() == "get" and fileName.lower() == "show":
         return getModelStrucNameFromTargetTable(targetTable) + "|ErrorDB"
+    if method.lower() == "post" and fileName.lower() == "create":
+        return getActionName(targetTable, fileName) + "Ret|ErrorDB"
     return "null|ErrorDB"
 
 

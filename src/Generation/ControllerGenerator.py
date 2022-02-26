@@ -54,7 +54,7 @@ class ControllerGenerator:
         self.template = self.template.replace(CONTROLLER_ACTION_IMPORT_FILE_NAME, getActionFileName(self.catName)[:-3])
         fileName = self.srcFileName[:-5]
         importsBloc = self.actionName
-        if self.method.lower() == "get" and fileName.lower() == "index":
+        if (self.method.lower() == "get" and fileName.lower() == "index") or (self.method.lower() == "post" and fileName.lower() == "create"):
             importsBloc += ", " + self.actionReturnType[0]
         if self.method.lower() == "get" and fileName.lower() == "show":
             self.template = self.template.replace(CONTROLLER_MODEL_IMPORTS, readFile(CONTROLLER_MODEL_IMPORT_TEMPLATE_PATH))

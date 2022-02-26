@@ -1,3 +1,7 @@
+export interface $ACTION_CUSTOM_RET_TYPE$ {
+    id: string
+}
+
 export const $ACTION_ACTION_NAME$ = ($ACTION_DTO_CALL_BLOCK_PLACE$): Promise<$ACTION_ACTION_RETURN_TYPE$> => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -5,7 +9,7 @@ export const $ACTION_ACTION_NAME$ = ($ACTION_DTO_CALL_BLOCK_PLACE$): Promise<$AC
 $ACTION_DB_ACTION_FIELDS$
             })
             .returning('id');
-            resolve(newlyCreatedId);
+            resolve({ id: newlyCreatedId } as $ACTION_CUSTOM_RET_TYPE$);
         } catch (error: any) {
             resolve(new ErrorDB(error));
         }
